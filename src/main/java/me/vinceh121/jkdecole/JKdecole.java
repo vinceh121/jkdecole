@@ -14,6 +14,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import me.vinceh121.jkdecole.activity.ActivityContent;
 import me.vinceh121.jkdecole.messages.MessageCalendar;
 import me.vinceh121.jkdecole.messages.MessageInfoUtilisateur;
 
@@ -147,6 +148,10 @@ public class JKdecole {
 
 	public MessageCalendar getCalendar() {
 		return MessageCalendar.fromJson(makeGetRequest("calendrier/idetablissement/" + idEtablissement));
+	}
+	
+	public ActivityContent getContentForActivity(int sessionId, int sessionContentId) {
+return ActivityContent.fromJson(makeGetRequest("contenuActivite/idetablissement/"+ idEtablissement + "/" + sessionId + "/" + sessionContentId));
 	}
 
 }
