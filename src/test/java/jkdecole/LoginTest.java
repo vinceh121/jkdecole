@@ -13,8 +13,8 @@ public class LoginTest {
 	public void test() {
 		JKdecole api = new JKdecole();
 		api.setEndpoint(Endpoints.getEndpoint("EN"));
-		api.login(JOptionPane.showInputDialog("Token: "));
-		System.out.println(api.getCalendar().getDays()[0].getSessions()[1].getInSession()[0].getTitle());
+		api.login(JOptionPane.showInputDialog("Username"), JOptionPane.showInputDialog("Password (visible)"), true);
+		System.out.println("You have " + api.getNumberOfUnreadEmails() + " unread emails");
 	}
 
 }

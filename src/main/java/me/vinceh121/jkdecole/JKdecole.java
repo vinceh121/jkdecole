@@ -12,6 +12,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import me.vinceh121.jkdecole.activity.ActivityContent;
@@ -40,9 +41,18 @@ public class JKdecole {
 			return httpClient.execute(req, new ResponseHandler<JSONObject>() {
 
 				public JSONObject handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
+					int status = response.getStatusLine().getStatusCode();
+					if (status != 200) {
+						System.err.println("Status code: " + status);
+					}
+
 					ByteArrayOutputStream stream = new ByteArrayOutputStream();
 					response.getEntity().writeTo(stream);
-					return new JSONObject(stream.toString());
+					try {
+						return new JSONObject(stream.toString());
+					} catch (JSONException e) {
+						return null;
+					}
 				}
 			});
 		} catch (ClientProtocolException e) {
@@ -105,7 +115,8 @@ public class JKdecole {
 	 */
 	public boolean login(String username, String password, boolean autosetEndpoint) {
 		if (autosetEndpoint)
-			endPoint = Endpoints.getEndpoint(password.substring(0, 1));
+			endPoint = Endpoints.getEndpoint(password.substring(0, 2));
+		
 
 		JSONObject obj = makeGetRequest("activation/" + username + "/" + password);
 		if (obj == null)
@@ -149,9 +160,22 @@ public class JKdecole {
 	public MessageCalendar getCalendar() {
 		return MessageCalendar.fromJson(makeGetRequest("calendrier/idetablissement/" + idEtablissement));
 	}
-	
+
 	public ActivityContent getContentForActivity(int sessionId, int sessionContentId) {
-return ActivityContent.fromJson(makeGetRequest("contenuActivite/idetablissement/"+ idEtablissement + "/" + sessionId + "/" + sessionContentId));
+		return ActivityContent.fromJson(makeGetRequest(
+				"contenuActivite/idetablissement/" + idEtablissement + "/" + sessionId + "/" + sessionContentId));
+	}
+
+	public String getIdEtablissement() {
+		return idEtablissement;
+	}
+
+	public void setIdEtablissement(String idEtablissement) {
+		this.idEtablissement = idEtablissement;
+	}
+
+	public String getToken() {
+		return token;
 	}
 
 }
