@@ -12,7 +12,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import me.vinceh121.jkdecole.activity.ActivityContent;
@@ -38,7 +37,7 @@ public class JKdecole {
 	public JSONObject makeRequest(HttpUriRequest req) {
 		dateOfLastRequest = new Date().getTime();
 		try {
-			return httpClient.execute(req, new ResponseHandler<JSONObject>() {
+			JSONObject obj = httpClient.execute(req, new ResponseHandler<JSONObject>() {
 
 				public JSONObject handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
 					int status = response.getStatusLine().getStatusCode();
@@ -48,13 +47,18 @@ public class JKdecole {
 
 					ByteArrayOutputStream stream = new ByteArrayOutputStream();
 					response.getEntity().writeTo(stream);
-					try {
-						return new JSONObject(stream.toString());
-					} catch (JSONException e) {
-						return null;
-					}
+
+					JSONObject obj = new JSONObject(stream.toString());
+
+					return obj;
+
 				}
 			});
+			if (obj.optJSONObject("errmsg") != null) {
+				throw new KdecoleException(obj.getJSONObject("errmsg"));
+			} else {
+				return obj;
+			}
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 			return null;
@@ -116,7 +120,6 @@ public class JKdecole {
 	public boolean login(String username, String password, boolean autosetEndpoint) {
 		if (autosetEndpoint)
 			endPoint = Endpoints.getEndpoint(password.substring(0, 2));
-		
 
 		JSONObject obj = makeGetRequest("activation/" + username + "/" + password);
 		if (obj == null)
