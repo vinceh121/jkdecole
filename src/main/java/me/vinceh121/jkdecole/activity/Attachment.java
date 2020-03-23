@@ -1,6 +1,6 @@
 package me.vinceh121.jkdecole.activity;
 
-import org.json.JSONObject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Attachment {
 	private int idRessource;
@@ -30,20 +30,13 @@ public class Attachment {
 		this.url = url;
 	}
 
+	@JsonProperty("typeMime")
 	public String getMimeType() {
 		return this.mimeType;
 	}
 
+	@JsonProperty("typeMime")
 	public void setMimeType(final String mimeType) {
 		this.mimeType = mimeType;
-	}
-
-	public static Attachment fromJson(final JSONObject obj) {
-		final Attachment att = new Attachment();
-		att.idRessource = obj.getInt("idRessource");
-		att.name = obj.getString("name");
-		att.url = obj.getString("url");
-		att.mimeType = obj.getString("typeMime");
-		return att;
 	}
 }

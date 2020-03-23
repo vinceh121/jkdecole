@@ -1,148 +1,134 @@
 package me.vinceh121.jkdecole.time;
 
 import java.util.Date;
+import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Session {
-	private SessionContent[] todo, due, inSession;
+	private List<SessionContent> todo, due, inSession;
 	private boolean actif, edited;
 	private Date start, end;
 	private int id;
 	private String subject, edit, room, title;
 
-	public SessionContent[] getTodo() {
+	@JsonProperty("aFaire")
+	public List<SessionContent> getTodo() {
 		return this.todo;
 	}
 
-	public void setTodo(final SessionContent[] todo) {
+	@JsonProperty("aFaire")
+	public void setTodo(final List<SessionContent> todo) {
 		this.todo = todo;
 	}
 
+	@JsonProperty("flagActif")
 	public boolean isActif() {
 		return this.actif;
 	}
 
+	@JsonProperty("flagActif")
 	public void setActif(final boolean actif) {
 		this.actif = actif;
 	}
 
+	@JsonProperty("flagModif")
 	public boolean isEdited() {
 		return this.edited;
 	}
 
+	@JsonProperty("flagModif")
 	public void setEdited(final boolean edited) {
 		this.edited = edited;
 	}
 
+	@JsonProperty("hdeb")
 	public Date getStart() {
 		return this.start;
 	}
 
+	@JsonProperty("hdeb")
 	public void setStart(final Date start) {
 		this.start = start;
 	}
 
+	@JsonProperty("hend")
 	public Date getEnd() {
 		return this.end;
 	}
 
+	@JsonProperty("hend")
 	public void setEnd(final Date end) {
 		this.end = end;
 	}
 
+	@JsonProperty("idSeance")
 	public int getId() {
 		return this.id;
 	}
 
+	@JsonProperty("idSeance")
 	public void setId(final int id) {
 		this.id = id;
 	}
 
+	@JsonProperty("matiere")
 	public String getSubject() {
 		return this.subject;
 	}
 
+	@JsonProperty("matiere")
 	public void setSubject(final String subject) {
 		this.subject = subject;
 	}
 
+	@JsonProperty("motifModif")
 	public String getEdit() {
 		return this.edit;
 	}
 
+	@JsonProperty("motifModif")
 	public void setEdit(final String edit) {
 		this.edit = edit;
 	}
 
+	@JsonProperty("salle")
 	public String getRoom() {
 		return this.room;
 	}
 
+	@JsonProperty("salle")
 	public void setRoom(final String room) {
 		this.room = room;
 	}
 
+	@JsonProperty("titre")
 	public String getTitle() {
 		return this.title;
 	}
 
+	@JsonProperty("titre")
 	public void setTitle(final String title) {
 		this.title = title;
 	}
 
-	public SessionContent[] getInSession() {
+	@JsonProperty("enSeance")
+	public List<SessionContent> getInSession() {
 		return this.inSession;
 	}
 
-	public void setInSession(final SessionContent[] inSession) {
+	@JsonProperty("enSeance")
+	public void setInSession(final List<SessionContent> inSession) {
 		this.inSession = inSession;
 	}
 
-	public SessionContent[] getDue() {
+	@JsonProperty("aRendre")
+	public List<SessionContent> getDue() {
 		return this.due;
 	}
 
-	public void setDue(final SessionContent[] due) {
+	@JsonProperty("aRendre")
+	public void setDue(final List<SessionContent> due) {
 		this.due = due;
 	}
-
-	public static Session fromJson(final JSONObject obj) {
-		final Session session = new Session();
-		session.setActif(obj.optBoolean("flagActif"));
-		session.setEdited(obj.optBoolean("flagModif"));
-		session.setStart(new Date(obj.optLong("hdeb")));
-		session.setEnd(new Date(obj.optLong("hend")));
-		session.setId(obj.optInt("idSeance"));
-		session.setSubject(obj.optString("matiere"));
-		session.setEdit(obj.optString("motifModif"));
-		session.setRoom(obj.optString("salle"));
-		session.setTitle(obj.optString("titre"));
-
-		final JSONArray arrTodo = obj.optJSONArray("aFaire");
-		if (arrTodo != null) {
-			final SessionContent[] todos = new SessionContent[arrTodo.length()];
-			for (int i = 0; i < todos.length; i++)
-				todos[i] = SessionContent.fromJson(arrTodo.getJSONObject(i));
-			session.setTodo(todos);
-		}
-		final JSONArray arrDue = obj.optJSONArray("aRendre");
-		if (arrDue != null) {
-			final SessionContent[] dues = new SessionContent[arrDue.length()];
-			for (int i = 0; i < dues.length; i++)
-				dues[i] = SessionContent.fromJson(arrDue.getJSONObject(i));
-			session.setDue(dues);
-		}
-		final JSONArray arrInSession = obj.optJSONArray("enSeance");
-		if (arrInSession != null) {
-			final SessionContent[] inSessions = new SessionContent[arrInSession.length()];
-			for (int i = 0; i < inSessions.length; i++)
-				inSessions[i] = SessionContent.fromJson(arrInSession.getJSONObject(i));
-			session.setInSession(inSessions);
-		}
-
-		return session;
-	}
-
 }

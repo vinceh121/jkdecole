@@ -2,7 +2,7 @@ package me.vinceh121.jkdecole.time;
 
 import java.util.Date;
 
-import org.json.JSONObject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SessionContent {
 	private Date date;
@@ -17,10 +17,12 @@ public class SessionContent {
 		this.date = date;
 	}
 
+	@JsonProperty("titre")
 	public String getTitle() {
 		return this.title;
 	}
 
+	@JsonProperty("titre")
 	public void setTitle(final String title) {
 		this.title = title;
 	}
@@ -39,16 +41,5 @@ public class SessionContent {
 
 	public void setUid(final int uid) {
 		this.uid = uid;
-	}
-
-	public static SessionContent fromJson(final JSONObject obj) {
-		if (obj == null)
-			return null;
-		final SessionContent cont = new SessionContent();
-		cont.setDate(new Date(obj.optLong("date")));
-		cont.setTitle(obj.optString("titre"));
-		cont.setType(obj.optString("type"));
-		cont.setUid(obj.optInt("uid"));
-		return cont;
 	}
 }

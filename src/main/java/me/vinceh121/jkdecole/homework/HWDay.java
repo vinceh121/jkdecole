@@ -2,9 +2,7 @@ package me.vinceh121.jkdecole.homework;
 
 import java.util.Date;
 
-import org.json.JSONObject;
-
-public class HWDay {
+public class HWDay { // TODO json serialization 
 	private Date date;
 
 	private Homework[] homeworks;
@@ -25,8 +23,4 @@ public class HWDay {
 		this.homeworks = homeworks;
 	}
 
-	public static HWDay fromJson(final JSONObject obj) {
-
-		return null;
-	}
 }

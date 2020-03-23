@@ -2,7 +2,7 @@ package me.vinceh121.jkdecole;
 
 import java.util.HashMap;
 
-public class Endpoints {
+public final class Endpoints {
 	private static final HashMap<String, String> endpoints = new HashMap<String, String>();
 
 	static {

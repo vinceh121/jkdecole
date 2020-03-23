@@ -5,6 +5,8 @@ import java.util.Date;
 public class Homework {
 	private Date date;
 	private boolean done;
+	private int time;
+	private String subject, title, type, uid, sessionId;
 
 	public Date getDate() {
 		return this.date;
@@ -70,6 +72,4 @@ public class Homework {
 		this.sessionId = sessionId;
 	}
 
-	private int time;
-	private String subject, title, type, uid, sessionId;
 }

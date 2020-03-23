@@ -1,9 +1,9 @@
 package me.vinceh121.jkdecole.messages;
 
 import java.util.Date;
+import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import me.vinceh121.jkdecole.time.TimeTableDay;
 
@@ -11,12 +11,14 @@ public class MessageCalendar {
 	private boolean calendarOpen;
 	private Date currentDate;
 	private String errmsg;
-	private TimeTableDay[] days;
+	private List<TimeTableDay> days;
 
+	@JsonProperty("cdtOuvert")
 	public boolean isCalendarOpen() {
 		return this.calendarOpen;
 	}
 
+	@JsonProperty("cdtOuvert")
 	public void setCalendarOpen(final boolean calendarOpen) {
 		this.calendarOpen = calendarOpen;
 	}
@@ -37,28 +39,14 @@ public class MessageCalendar {
 		this.errmsg = errmsg;
 	}
 
-	public TimeTableDay[] getDays() {
+	@JsonProperty("listeJourCdt")
+	public List<TimeTableDay> getDays() {
 		return this.days;
 	}
 
-	public void setDays(final TimeTableDay[] days) {
+	@JsonProperty("listeJourCdt")
+	public void setDays(final List<TimeTableDay> days) {
 		this.days = days;
-	}
-
-	public static MessageCalendar fromJson(final JSONObject obj) {
-		final MessageCalendar cal = new MessageCalendar();
-		cal.setCalendarOpen(obj.optBoolean("cdtOuvert"));
-		cal.setCurrentDate(new Date(obj.optLong("currentDate")));
-		cal.setErrmsg(obj.optString("errmsg"));
-
-		final JSONArray arr = obj.optJSONArray("listeJourCdt");
-		if (arr != null) {
-			final TimeTableDay[] days = new TimeTableDay[arr.length()];
-			for (int i = 0; i < arr.length(); i++)
-				days[i] = TimeTableDay.fromJson(arr.getJSONObject(i));
-			cal.setDays(days);
-		}
-		return cal;
 	}
 
 }

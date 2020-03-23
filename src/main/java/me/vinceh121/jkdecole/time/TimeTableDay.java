@@ -1,13 +1,13 @@
 package me.vinceh121.jkdecole.time;
 
 import java.util.Date;
+import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TimeTableDay {
 	private Date date;
-	private Session[] sessions;
+	private List<Session> sessions;
 
 	public Date getDate() {
 		return this.date;
@@ -17,24 +17,13 @@ public class TimeTableDay {
 		this.date = date;
 	}
 
-	public Session[] getSessions() {
+	@JsonProperty("listeSeances")
+	public List<Session> getSessions() {
 		return this.sessions;
 	}
 
-	public void setSessions(final Session[] sessions) {
+	@JsonProperty("listeSeances")
+	public void setSessions(final List<Session> sessions) {
 		this.sessions = sessions;
-	}
-
-	public static TimeTableDay fromJson(final JSONObject jsonObject) {
-		final TimeTableDay day = new TimeTableDay();
-		day.setDate(new Date(jsonObject.optLong("date")));
-		final JSONArray arr = jsonObject.optJSONArray("listeSeances");
-		if (arr != null) {
-			final Session[] sessions = new Session[arr.length()];
-			for (int i = 0; i < arr.length(); i++)
-				sessions[i] = Session.fromJson(arr.getJSONObject(i));
-			day.setSessions(sessions);
-		}
-		return day;
 	}
 }

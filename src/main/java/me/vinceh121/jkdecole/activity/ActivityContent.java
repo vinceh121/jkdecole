@@ -1,20 +1,22 @@
 package me.vinceh121.jkdecole.activity;
 
 import java.util.Date;
+import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ActivityContent {
 	private String htmlContent, errmsg, subject, title, type, url;
 	private Date date;
 	private boolean done, homework, doneEditable;
-	private Attachment[] attachments;
+	private List<Attachment> attachments;
 
+	@JsonProperty("codeHTML")
 	public String getHtmlContent() {
 		return this.htmlContent;
 	}
 
+	@JsonProperty("codeHTML")
 	public void setHtmlContent(final String htmlContent) {
 		this.htmlContent = htmlContent;
 	}
@@ -27,18 +29,22 @@ public class ActivityContent {
 		this.errmsg = errmsg;
 	}
 
+	@JsonProperty("matiere")
 	public String getSubject() {
 		return this.subject;
 	}
 
+	@JsonProperty("matiere")
 	public void setSubject(final String subject) {
 		this.subject = subject;
 	}
 
+	@JsonProperty("titre")
 	public String getTitle() {
 		return this.title;
 	}
 
+	@JsonProperty("titre")
 	public void setTitle(final String title) {
 		this.title = title;
 	}
@@ -67,58 +73,43 @@ public class ActivityContent {
 		this.date = date;
 	}
 
+	@JsonProperty("flagRealise")
 	public boolean isDone() {
 		return this.done;
 	}
 
+	@JsonProperty("flagRealise")
 	public void setDone(final boolean done) {
 		this.done = done;
 	}
 
+	@JsonProperty("flagTravailAFaire")
 	public boolean isHomework() {
 		return this.homework;
 	}
 
+	@JsonProperty("flagTravailAFaire")
 	public void setHomework(final boolean homework) {
 		this.homework = homework;
 	}
 
+	@JsonProperty("isFaitModifiable")
 	public boolean isDoneEditable() {
 		return this.doneEditable;
 	}
 
+	@JsonProperty("isFaitModifiable")
 	public void setDoneEditable(final boolean doneEditable) {
 		this.doneEditable = doneEditable;
 	}
 
-	public Attachment[] getAttachments() {
+	@JsonProperty("pjs")
+	public List<Attachment> getAttachments() {
 		return this.attachments;
 	}
 
-	public void setAttachments(final Attachment[] attachments) {
+	@JsonProperty("pjs")
+	public void setAttachments(final List<Attachment> attachments) {
 		this.attachments = attachments;
 	}
-
-	public static ActivityContent fromJson(final JSONObject obj) {
-		final ActivityContent cont = new ActivityContent();
-		cont.setHtmlContent(obj.optString("codeHTML"));
-		cont.setDate(new Date(obj.optInt("date")));
-		cont.setErrmsg(obj.optString("errmsg"));
-		cont.setDone(obj.optBoolean("flagRealise"));
-		cont.setHomework(obj.optBoolean("flagTravailAFaire"));
-		cont.setDoneEditable(obj.optBoolean("isFaitModifiable"));
-		cont.setSubject(obj.optString("matiere"));
-		cont.setTitle(obj.optString("titre"));
-		cont.setType(obj.optString("type"));
-		cont.setUrl(obj.optString("url"));
-
-		final JSONArray arr = obj.optJSONArray("pjs");
-		final Attachment[] att = new Attachment[arr.length()];
-		for (int i = 0; i < arr.length(); i++)
-			att[i] = Attachment.fromJson(arr.optJSONObject(i));
-		cont.setAttachments(att);
-
-		return cont;
-	}
-
 }
