@@ -7,66 +7,66 @@ public class Homework {
 	private boolean done;
 
 	public Date getDate() {
-		return date;
+		return this.date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(final Date date) {
 		this.date = date;
 	}
 
 	public boolean isDone() {
-		return done;
+		return this.done;
 	}
 
-	public void setDone(boolean done) {
+	public void setDone(final boolean done) {
 		this.done = done;
 	}
 
 	public int getTime() {
-		return time;
+		return this.time;
 	}
 
-	public void setTime(int time) {
+	public void setTime(final int time) {
 		this.time = time;
 	}
 
 	public String getSubject() {
-		return subject;
+		return this.subject;
 	}
 
-	public void setSubject(String subject) {
+	public void setSubject(final String subject) {
 		this.subject = subject;
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
 	public String getType() {
-		return type;
+		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
 
 	public String getUid() {
-		return uid;
+		return this.uid;
 	}
 
-	public void setUid(String uid) {
+	public void setUid(final String uid) {
 		this.uid = uid;
 	}
 
 	public String getSessionId() {
-		return sessionId;
+		return this.sessionId;
 	}
 
-	public void setSessionId(String sessionId) {
+	public void setSessionId(final String sessionId) {
 		this.sessionId = sessionId;
 	}
 

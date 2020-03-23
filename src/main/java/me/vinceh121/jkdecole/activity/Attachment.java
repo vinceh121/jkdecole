@@ -7,39 +7,39 @@ public class Attachment {
 	private String name, url, mimeType;
 
 	public int getIdRessource() {
-		return idRessource;
+		return this.idRessource;
 	}
 
-	public void setIdRessource(int idRessource) {
+	public void setIdRessource(final int idRessource) {
 		this.idRessource = idRessource;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
 	public String getUrl() {
-		return url;
+		return this.url;
 	}
 
-	public void setUrl(String url) {
+	public void setUrl(final String url) {
 		this.url = url;
 	}
 
 	public String getMimeType() {
-		return mimeType;
+		return this.mimeType;
 	}
 
-	public void setMimeType(String mimeType) {
+	public void setMimeType(final String mimeType) {
 		this.mimeType = mimeType;
 	}
 
-	public static Attachment fromJson(JSONObject obj) {
-		Attachment att = new Attachment();
+	public static Attachment fromJson(final JSONObject obj) {
+		final Attachment att = new Attachment();
 		att.idRessource = obj.getInt("idRessource");
 		att.name = obj.getString("name");
 		att.url = obj.getString("url");

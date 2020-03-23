@@ -14,49 +14,48 @@ public class MessageCalendar {
 	private TimeTableDay[] days;
 
 	public boolean isCalendarOpen() {
-		return calendarOpen;
+		return this.calendarOpen;
 	}
 
-	public void setCalendarOpen(boolean calendarOpen) {
+	public void setCalendarOpen(final boolean calendarOpen) {
 		this.calendarOpen = calendarOpen;
 	}
 
 	public Date getCurrentDate() {
-		return currentDate;
+		return this.currentDate;
 	}
 
-	public void setCurrentDate(Date currentDate) {
+	public void setCurrentDate(final Date currentDate) {
 		this.currentDate = currentDate;
 	}
 
 	public String getErrmsg() {
-		return errmsg;
+		return this.errmsg;
 	}
 
-	public void setErrmsg(String errmsg) {
+	public void setErrmsg(final String errmsg) {
 		this.errmsg = errmsg;
 	}
 
 	public TimeTableDay[] getDays() {
-		return days;
+		return this.days;
 	}
 
-	public void setDays(TimeTableDay[] days) {
+	public void setDays(final TimeTableDay[] days) {
 		this.days = days;
 	}
-	
-	public static MessageCalendar fromJson(JSONObject obj) {
-		MessageCalendar cal = new MessageCalendar();
+
+	public static MessageCalendar fromJson(final JSONObject obj) {
+		final MessageCalendar cal = new MessageCalendar();
 		cal.setCalendarOpen(obj.optBoolean("cdtOuvert"));
 		cal.setCurrentDate(new Date(obj.optLong("currentDate")));
 		cal.setErrmsg(obj.optString("errmsg"));
-		
-		JSONArray arr = obj.optJSONArray("listeJourCdt");
+
+		final JSONArray arr = obj.optJSONArray("listeJourCdt");
 		if (arr != null) {
-			TimeTableDay[] days = new TimeTableDay[arr.length()];
-			for (int i = 0; i < arr.length(); i++) {
+			final TimeTableDay[] days = new TimeTableDay[arr.length()];
+			for (int i = 0; i < arr.length(); i++)
 				days[i] = TimeTableDay.fromJson(arr.getJSONObject(i));
-			}
 			cal.setDays(days);
 		}
 		return cal;

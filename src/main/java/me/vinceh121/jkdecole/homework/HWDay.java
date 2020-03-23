@@ -10,22 +10,22 @@ public class HWDay {
 	private Homework[] homeworks;
 
 	public Date getDate() {
-		return date;
+		return this.date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(final Date date) {
 		this.date = date;
 	}
 
 	public Homework[] getHomeworks() {
-		return homeworks;
+		return this.homeworks;
 	}
 
-	public void setHomeworks(Homework[] homeworks) {
+	public void setHomeworks(final Homework[] homeworks) {
 		this.homeworks = homeworks;
 	}
 
-	public static HWDay fromJson(JSONObject obj) {
+	public static HWDay fromJson(final JSONObject obj) {
 
 		return null;
 	}

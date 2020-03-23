@@ -9,62 +9,63 @@ public class Article {
 	private Date date;
 
 	public String getAuthor() {
-		return author;
+		return this.author;
 	}
 
-	public void setAuthor(String author) {
+	public void setAuthor(final String author) {
 		this.author = author;
 	}
 
 	public String getSenderId() {
-		return senderId;
+		return this.senderId;
 	}
 
-	public void setSenderId(String senderId) {
+	public void setSenderId(final String senderId) {
 		this.senderId = senderId;
 	}
 
 	public String getErrmsg() {
-		return errmsg;
+		return this.errmsg;
 	}
 
-	public void setErrmsg(String errmsg) {
+	public void setErrmsg(final String errmsg) {
 		this.errmsg = errmsg;
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
 	public String getType() {
-		return type;
+		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
 
 	public String getUid() {
-		return uid;
+		return this.uid;
 	}
 
-	public void setUid(String uid) {
+	public void setUid(final String uid) {
 		this.uid = uid;
 	}
 
 	public Date getDate() {
-		return date;
+		return this.date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(final Date date) {
 		this.date = date;
 	}
-	public static Article fromJson(JSONObject obj) {
-		Article article = new Article();
+
+	public static Article fromJson(final JSONObject obj) {
+		final Article article = new Article();
 		article.setAuthor(obj.optString("auteur"));
 		article.setTitle(obj.optString("titre"));
 		article.setErrmsg(obj.optString("errmsg"));
@@ -75,5 +76,4 @@ public class Article {
 		return article;
 	}
 
-	
 }

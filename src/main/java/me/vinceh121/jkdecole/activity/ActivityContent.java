@@ -12,95 +12,95 @@ public class ActivityContent {
 	private Attachment[] attachments;
 
 	public String getHtmlContent() {
-		return htmlContent;
+		return this.htmlContent;
 	}
 
-	public void setHtmlContent(String htmlContent) {
+	public void setHtmlContent(final String htmlContent) {
 		this.htmlContent = htmlContent;
 	}
 
 	public String getErrmsg() {
-		return errmsg;
+		return this.errmsg;
 	}
 
-	public void setErrmsg(String errmsg) {
+	public void setErrmsg(final String errmsg) {
 		this.errmsg = errmsg;
 	}
 
 	public String getSubject() {
-		return subject;
+		return this.subject;
 	}
 
-	public void setSubject(String subject) {
+	public void setSubject(final String subject) {
 		this.subject = subject;
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
 	public String getType() {
-		return type;
+		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
 
 	public String getUrl() {
-		return url;
+		return this.url;
 	}
 
-	public void setUrl(String url) {
+	public void setUrl(final String url) {
 		this.url = url;
 	}
 
 	public Date getDate() {
-		return date;
+		return this.date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(final Date date) {
 		this.date = date;
 	}
 
 	public boolean isDone() {
-		return done;
+		return this.done;
 	}
 
-	public void setDone(boolean done) {
+	public void setDone(final boolean done) {
 		this.done = done;
 	}
 
 	public boolean isHomework() {
-		return homework;
+		return this.homework;
 	}
 
-	public void setHomework(boolean homework) {
+	public void setHomework(final boolean homework) {
 		this.homework = homework;
 	}
 
 	public boolean isDoneEditable() {
-		return doneEditable;
+		return this.doneEditable;
 	}
 
-	public void setDoneEditable(boolean doneEditable) {
+	public void setDoneEditable(final boolean doneEditable) {
 		this.doneEditable = doneEditable;
 	}
 
 	public Attachment[] getAttachments() {
-		return attachments;
+		return this.attachments;
 	}
 
-	public void setAttachments(Attachment[] attachments) {
+	public void setAttachments(final Attachment[] attachments) {
 		this.attachments = attachments;
 	}
 
-	public static ActivityContent fromJson(JSONObject obj) {
-		ActivityContent cont = new ActivityContent();
+	public static ActivityContent fromJson(final JSONObject obj) {
+		final ActivityContent cont = new ActivityContent();
 		cont.setHtmlContent(obj.optString("codeHTML"));
 		cont.setDate(new Date(obj.optInt("date")));
 		cont.setErrmsg(obj.optString("errmsg"));
@@ -111,14 +111,13 @@ public class ActivityContent {
 		cont.setTitle(obj.optString("titre"));
 		cont.setType(obj.optString("type"));
 		cont.setUrl(obj.optString("url"));
-		
-		JSONArray arr = obj.optJSONArray("pjs");
-		Attachment[] att = new Attachment[arr.length()];
-		for (int i = 0; i < arr.length(); i++) {
+
+		final JSONArray arr = obj.optJSONArray("pjs");
+		final Attachment[] att = new Attachment[arr.length()];
+		for (int i = 0; i < arr.length(); i++)
 			att[i] = Attachment.fromJson(arr.optJSONObject(i));
-		}
 		cont.setAttachments(att);
-		
+
 		return cont;
 	}
 

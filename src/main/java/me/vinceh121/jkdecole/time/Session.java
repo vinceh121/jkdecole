@@ -13,103 +13,103 @@ public class Session {
 	private String subject, edit, room, title;
 
 	public SessionContent[] getTodo() {
-		return todo;
+		return this.todo;
 	}
 
-	public void setTodo(SessionContent[] todo) {
+	public void setTodo(final SessionContent[] todo) {
 		this.todo = todo;
 	}
 
 	public boolean isActif() {
-		return actif;
+		return this.actif;
 	}
 
-	public void setActif(boolean actif) {
+	public void setActif(final boolean actif) {
 		this.actif = actif;
 	}
 
 	public boolean isEdited() {
-		return edited;
+		return this.edited;
 	}
 
-	public void setEdited(boolean edited) {
+	public void setEdited(final boolean edited) {
 		this.edited = edited;
 	}
 
 	public Date getStart() {
-		return start;
+		return this.start;
 	}
 
-	public void setStart(Date start) {
+	public void setStart(final Date start) {
 		this.start = start;
 	}
 
 	public Date getEnd() {
-		return end;
+		return this.end;
 	}
 
-	public void setEnd(Date end) {
+	public void setEnd(final Date end) {
 		this.end = end;
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(final int id) {
 		this.id = id;
 	}
 
 	public String getSubject() {
-		return subject;
+		return this.subject;
 	}
 
-	public void setSubject(String subject) {
+	public void setSubject(final String subject) {
 		this.subject = subject;
 	}
 
 	public String getEdit() {
-		return edit;
+		return this.edit;
 	}
 
-	public void setEdit(String edit) {
+	public void setEdit(final String edit) {
 		this.edit = edit;
 	}
 
 	public String getRoom() {
-		return room;
+		return this.room;
 	}
 
-	public void setRoom(String room) {
+	public void setRoom(final String room) {
 		this.room = room;
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
 	public SessionContent[] getInSession() {
-		return inSession;
+		return this.inSession;
 	}
 
-	public void setInSession(SessionContent[] inSession) {
+	public void setInSession(final SessionContent[] inSession) {
 		this.inSession = inSession;
 	}
 
 	public SessionContent[] getDue() {
-		return due;
+		return this.due;
 	}
 
-	public void setDue(SessionContent[] due) {
+	public void setDue(final SessionContent[] due) {
 		this.due = due;
 	}
 
-	public static Session fromJson(JSONObject obj) {
-		Session session = new Session();
+	public static Session fromJson(final JSONObject obj) {
+		final Session session = new Session();
 		session.setActif(obj.optBoolean("flagActif"));
 		session.setEdited(obj.optBoolean("flagModif"));
 		session.setStart(new Date(obj.optLong("hdeb")));
@@ -120,28 +120,25 @@ public class Session {
 		session.setRoom(obj.optString("salle"));
 		session.setTitle(obj.optString("titre"));
 
-		JSONArray arrTodo = obj.optJSONArray("aFaire");
+		final JSONArray arrTodo = obj.optJSONArray("aFaire");
 		if (arrTodo != null) {
-			SessionContent[] todos = new SessionContent[arrTodo.length()];
-			for (int i = 0; i < todos.length; i++) {
+			final SessionContent[] todos = new SessionContent[arrTodo.length()];
+			for (int i = 0; i < todos.length; i++)
 				todos[i] = SessionContent.fromJson(arrTodo.getJSONObject(i));
-			}
 			session.setTodo(todos);
 		}
-		JSONArray arrDue = obj.optJSONArray("aRendre");
+		final JSONArray arrDue = obj.optJSONArray("aRendre");
 		if (arrDue != null) {
-			SessionContent[] dues = new SessionContent[arrDue.length()];
-			for (int i = 0; i < dues.length; i++) {
+			final SessionContent[] dues = new SessionContent[arrDue.length()];
+			for (int i = 0; i < dues.length; i++)
 				dues[i] = SessionContent.fromJson(arrDue.getJSONObject(i));
-			}
 			session.setDue(dues);
 		}
-		JSONArray arrInSession = obj.optJSONArray("enSeance");
+		final JSONArray arrInSession = obj.optJSONArray("enSeance");
 		if (arrInSession != null) {
-			SessionContent[] inSessions = new SessionContent[arrInSession.length()];
-			for (int i = 0; i < inSessions.length; i++) {
+			final SessionContent[] inSessions = new SessionContent[arrInSession.length()];
+			for (int i = 0; i < inSessions.length; i++)
 				inSessions[i] = SessionContent.fromJson(arrInSession.getJSONObject(i));
-			}
 			session.setInSession(inSessions);
 		}
 

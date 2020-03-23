@@ -10,41 +10,41 @@ public class SessionContent {
 	private int uid;
 
 	public Date getDate() {
-		return date;
+		return this.date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(final Date date) {
 		this.date = date;
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
 	public String getType() {
-		return type;
+		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
 
 	public int getUid() {
-		return uid;
+		return this.uid;
 	}
 
-	public void setUid(int uid) {
+	public void setUid(final int uid) {
 		this.uid = uid;
 	}
 
-	public static SessionContent fromJson(JSONObject obj) {
+	public static SessionContent fromJson(final JSONObject obj) {
 		if (obj == null)
 			return null;
-		SessionContent cont = new SessionContent();
+		final SessionContent cont = new SessionContent();
 		cont.setDate(new Date(obj.optLong("date")));
 		cont.setTitle(obj.optString("titre"));
 		cont.setType(obj.optString("type"));

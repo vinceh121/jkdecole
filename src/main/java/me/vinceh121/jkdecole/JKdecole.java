@@ -4,10 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Date;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -26,159 +24,150 @@ public class JKdecole {
 	private long dateOfLastRequest = 0;
 	private String idEtablissement;
 
-	public JKdecole(String userAgent) {
+	public JKdecole() {
+		this(JKdecole.DEFAULT_USER_AGENT);
+	}
+
+	public JKdecole(final String userAgent) {
 		this.httpClient = HttpClientBuilder.create().setUserAgent(userAgent).build();
 	}
 
-	public JKdecole() {
-		this(DEFAULT_USER_AGENT);
-	}
-
-	public JSONObject makeRequest(HttpUriRequest req) {
-		dateOfLastRequest = new Date().getTime();
-		try {
-			JSONObject obj = httpClient.execute(req, new ResponseHandler<JSONObject>() {
-
-				public JSONObject handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-					int status = response.getStatusLine().getStatusCode();
-					if (status != 200) {
-						System.err.println("Status code: " + status);
-					}
-
-					ByteArrayOutputStream stream = new ByteArrayOutputStream();
-					response.getEntity().writeTo(stream);
-
-					JSONObject obj = new JSONObject(stream.toString());
-
-					return obj;
-
-				}
-			});
-			if (obj.optJSONObject("errmsg") != null) {
-				throw new KdecoleException(obj.getJSONObject("errmsg"));
-			} else {
-				return obj;
-			}
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			return null;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public JSONObject makeGetRequest(String request) {
-		if (!request.endsWith("/"))
-			request = request + "/";
-		HttpGet get = new HttpGet(endPoint + request + "?_=" + new Date().getTime());
-		get.setHeader("X-Kdecole-Auth", token);
-		get.setHeader("X-Kdecole-Date", Long.toString(dateOfLastRequest));
-		get.setHeader("X-Kdecole-Vers", kdecoleVers);
-		return makeRequest(get);
-	}
-
-	public JSONArray makeRequestArray(HttpUriRequest req) {
-		dateOfLastRequest = new Date().getTime();
-		try {
-			return httpClient.execute(req, new ResponseHandler<JSONArray>() {
-
-				public JSONArray handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-					ByteArrayOutputStream stream = new ByteArrayOutputStream();
-					response.getEntity().writeTo(stream);
-					return new JSONArray(stream.toString());
-				}
-			});
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			return null;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public void setEndpoint(String url) {
+	public void setEndpoint(final String url) {
 		this.endPoint = url;
-	}
-
-	public JSONArray makeGetRequestArray(String request) {
-		if (!request.endsWith("/"))
-			request = request + "/";
-		HttpGet get = new HttpGet(endPoint + request + "?_=" + new Date().getTime());
-		get.setHeader("X-Kdecole-Auth", token);
-		get.setHeader("X-Kdecole-Date", Long.toString(dateOfLastRequest));
-		get.setHeader("X-Kdecole-Vers", kdecoleVers);
-		return makeRequestArray(get);
 	}
 
 	/**
 	 * Attempt to login.
-	 * 
+	 *
 	 * @return true if login is successful, false otherwise
 	 */
-	public boolean login(String username, String password, boolean autosetEndpoint) {
+	public boolean login(final String username, final String password, final boolean autosetEndpoint) {
 		if (autosetEndpoint)
-			endPoint = Endpoints.getEndpoint(password.substring(0, 2));
+			this.endPoint = Endpoints.getEndpoint(password.substring(0, 2));
 
-		JSONObject obj = makeGetRequest("activation/" + username + "/" + password);
+		final JSONObject obj = this.makeGetRequest("activation/" + username + "/" + password);
 		if (obj == null)
 			return false;
 
 		if (obj.getBoolean("success")) {
-			token = obj.getString("authtoken");
-			isConnected = true;
-			idEtablissement = getInfoUtilisateur().getIdEtablissementSelectionne();
+			this.token = obj.getString("authtoken");
+			this.isConnected = true;
+			this.idEtablissement = this.getInfoUtilisateur().getIdEtablissementSelectionne();
 			return true;
 		}
 		return false;
 	}
 
-	public void login(String token) {
+	public void login(final String token) {
 		this.token = token;
-		isConnected = true;
+		this.isConnected = true;
 	}
 
 	public boolean isConnected() {
-		return isConnected;
+		return this.isConnected;
 	}
 
 	public MessageInfoUtilisateur getInfoUtilisateur() {
-		return MessageInfoUtilisateur.fromJson(makeGetRequest("infoutilisateur"));
+		return MessageInfoUtilisateur.fromJson(this.makeGetRequest("infoutilisateur"));
 	}
 
 	public int getNumberOfUnreadEmails() {
-		return makeGetRequest("messagerie/info").getInt("nbMessagesNonLus");
+		return this.makeGetRequest("messagerie/info").getInt("nbMessagesNonLus");
 	}
 
 	public Article[] getNews() {
-		JSONArray obj = makeGetRequestArray("actualites/idetablissement/" + idEtablissement);
-		Article[] news = new Article[obj.length()];
-		for (int i = 0; i < news.length; i++) {
+		final JSONArray obj = this.makeGetRequestArray("actualites/idetablissement/" + this.idEtablissement);
+		final Article[] news = new Article[obj.length()];
+		for (int i = 0; i < news.length; i++)
 			news[i] = Article.fromJson(obj.getJSONObject(i));
-		}
 		return news;
 	}
 
 	public MessageCalendar getCalendar() {
-		return MessageCalendar.fromJson(makeGetRequest("calendrier/idetablissement/" + idEtablissement));
+		return MessageCalendar.fromJson(this.makeGetRequest("calendrier/idetablissement/" + this.idEtablissement));
 	}
 
-	public ActivityContent getContentForActivity(int sessionId, int sessionContentId) {
-		return ActivityContent.fromJson(makeGetRequest(
-				"contenuActivite/idetablissement/" + idEtablissement + "/" + sessionId + "/" + sessionContentId));
+	public ActivityContent getContentForActivity(final int sessionId, final int sessionContentId) {
+		return ActivityContent.fromJson(this.makeGetRequest(
+				"contenuActivite/idetablissement/" + this.idEtablissement + "/" + sessionId + "/" + sessionContentId));
 	}
 
 	public String getIdEtablissement() {
-		return idEtablissement;
+		return this.idEtablissement;
 	}
 
-	public void setIdEtablissement(String idEtablissement) {
+	public void setIdEtablissement(final String idEtablissement) {
 		this.idEtablissement = idEtablissement;
 	}
 
 	public String getToken() {
-		return token;
+		return this.token;
+	}
+
+	private JSONObject makeRequest(final HttpUriRequest req) {
+		this.dateOfLastRequest = new Date().getTime();
+		try {
+			final JSONObject obj = this.httpClient.execute(req, response -> {
+				final int status = response.getStatusLine().getStatusCode();
+				if (status != 200)
+					System.err.println("Status code: " + status);
+	
+				final ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				response.getEntity().writeTo(stream);
+	
+				final JSONObject obj1 = new JSONObject(stream.toString());
+	
+				return obj1;
+	
+			});
+			if (obj.optJSONObject("errmsg") != null)
+				throw new KdecoleException(obj.getJSONObject("errmsg"));
+			else
+				return obj;
+		} catch (final ClientProtocolException e) {
+			e.printStackTrace();
+			return null;
+		} catch (final IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	private JSONObject makeGetRequest(String request) {
+		if (!request.endsWith("/"))
+			request = request + "/";
+		final HttpGet get = new HttpGet(this.endPoint + request + "?_=" + new Date().getTime());
+		get.setHeader("X-Kdecole-Auth", this.token);
+		get.setHeader("X-Kdecole-Date", Long.toString(this.dateOfLastRequest));
+		get.setHeader("X-Kdecole-Vers", this.kdecoleVers);
+		return this.makeRequest(get);
+	}
+
+	private JSONArray makeRequestArray(final HttpUriRequest req) {
+		this.dateOfLastRequest = new Date().getTime();
+		try {
+			return this.httpClient.execute(req, response -> {
+				final ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				response.getEntity().writeTo(stream);
+				return new JSONArray(stream.toString());
+			});
+		} catch (final ClientProtocolException e) {
+			e.printStackTrace();
+			return null;
+		} catch (final IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	private JSONArray makeGetRequestArray(String request) {
+		if (!request.endsWith("/"))
+			request = request + "/";
+		final HttpGet get = new HttpGet(this.endPoint + request + "?_=" + new Date().getTime());
+		get.setHeader("X-Kdecole-Auth", this.token);
+		get.setHeader("X-Kdecole-Date", Long.toString(this.dateOfLastRequest));
+		get.setHeader("X-Kdecole-Vers", this.kdecoleVers);
+		return this.makeRequestArray(get);
 	}
 
 }

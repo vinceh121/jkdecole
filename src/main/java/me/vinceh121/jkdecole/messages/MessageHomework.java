@@ -11,40 +11,39 @@ public class MessageHomework {
 	private HWDay[] days;
 
 	public String getErrmsg() {
-		return errmsg;
+		return this.errmsg;
 	}
 
-	public void setErrmsg(String errmsg) {
+	public void setErrmsg(final String errmsg) {
 		this.errmsg = errmsg;
 	}
 
 	public boolean isHwOpen() {
-		return hwOpen;
+		return this.hwOpen;
 	}
 
-	public void setHwOpen(boolean hwOpen) {
+	public void setHwOpen(final boolean hwOpen) {
 		this.hwOpen = hwOpen;
 	}
 
 	public HWDay[] getDays() {
-		return days;
+		return this.days;
 	}
 
-	public void setDays(HWDay[] days) {
+	public void setDays(final HWDay[] days) {
 		this.days = days;
 	}
 
-	public static MessageHomework fromJson(JSONObject obj) {
-		MessageHomework hw = new MessageHomework();
+	public static MessageHomework fromJson(final JSONObject obj) {
+		final MessageHomework hw = new MessageHomework();
 		hw.setHwOpen(obj.optBoolean("tafOuvert"));
 		hw.setErrmsg(obj.optString("errmsg"));
 
-		JSONArray arrDays = obj.optJSONArray("listeTravaux");
+		final JSONArray arrDays = obj.optJSONArray("listeTravaux");
 		if (arrDays != null) {
-			HWDay[] days = new HWDay[arrDays.length()];
-			for (int i = 0; i < days.length; i++) {
+			final HWDay[] days = new HWDay[arrDays.length()];
+			for (int i = 0; i < days.length; i++)
 				days[i] = HWDay.fromJson(arrDays.getJSONObject(i));
-			}
 			hw.setDays(days);
 		}
 		return hw;
