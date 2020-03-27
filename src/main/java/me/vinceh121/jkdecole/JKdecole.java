@@ -19,11 +19,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.vinceh121.jkdecole.activity.ActivityContent;
-import me.vinceh121.jkdecole.messages.MessageCalendar;
-import me.vinceh121.jkdecole.messages.MessageInfoUtilisateur;
+import me.vinceh121.jkdecole.messages.CompleteCommunication;
+import me.vinceh121.jkdecole.messages.Inbox;
+import me.vinceh121.jkdecole.requests.RequestCalendar;
+import me.vinceh121.jkdecole.requests.RequestInfoUtilisateur;
 
 public class JKdecole {
-	public static final String DEFAULT_USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.128 Electron/4.1.5 Safari/537.36";
+	public static final String DEFAULT_USER_AGENT
+			= "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.128 Electron/4.1.5 Safari/537.36";
 	private final ObjectMapper mapper = new ObjectMapper();
 	private HttpClient httpClient;
 	private boolean isConnected = false;
@@ -74,9 +77,30 @@ public class JKdecole {
 		return this.isConnected;
 	}
 
-	public MessageInfoUtilisateur getInfoUtilisateur()
+	/**
+	 * 
+	 * @param index -1 for not specified
+	 * @throws IOException
+	 * @throws ClientProtocolException
+	 */
+	public Inbox getInbox(int index) throws ClientProtocolException, IOException {
+		final JsonNode obj;
+		if (index == -1)
+			obj = this.makeGetRequest("messagerie/boiteReception");
+		else
+			obj = this.makeGetRequest("messagerie/boiteReception/" + index);
+
+		return this.mapper.readValue(obj.traverse(), Inbox.class);
+	}
+
+	public CompleteCommunication getCommunication(long id) throws ClientProtocolException, IOException {
+		final JsonNode obj = this.makeGetRequest("messagerie/communication/" + id);
+		return this.mapper.readValue(obj.traverse(), CompleteCommunication.class);
+	}
+
+	public RequestInfoUtilisateur getInfoUtilisateur()
 			throws JsonParseException, JsonMappingException, ClientProtocolException, IOException {
-		return this.mapper.readValue(this.makeGetRequest("infoutilisateur").traverse(), MessageInfoUtilisateur.class);
+		return this.mapper.readValue(this.makeGetRequest("infoutilisateur").traverse(), RequestInfoUtilisateur.class);
 	}
 
 	public int getNumberOfUnreadEmails() throws ClientProtocolException, IOException {
@@ -85,16 +109,15 @@ public class JKdecole {
 
 	public List<Article> getNews() throws ClientProtocolException, IOException {
 		final JsonNode obj = this.makeGetRequest("actualites/idetablissement/" + this.idEtablissement);
-		final List<Article> news = this.mapper.readValue(obj.traverse(), new TypeReference<List<Article>>() {
-		});
+		final List<Article> news = this.mapper.readValue(obj.traverse(), new TypeReference<List<Article>>() {});
 		return news;
 	}
 
-	public MessageCalendar getCalendar()
+	public RequestCalendar getCalendar()
 			throws JsonParseException, JsonMappingException, ClientProtocolException, IOException {
 		return this.mapper.readValue(
 				this.makeGetRequest("calendrier/idetablissement/" + this.idEtablissement).traverse(),
-				MessageCalendar.class);
+				RequestCalendar.class);
 	}
 
 	public ActivityContent getContentForActivity(final int sessionId, final int sessionContentId)
@@ -149,7 +172,6 @@ public class JKdecole {
 			return mapper.readTree(stream.toString());
 
 		});
-		System.out.println(obj.toPrettyString());
 
 		if (obj.hasNonNull("errmsg"))
 			throw parseException(obj.get("errmsg"));

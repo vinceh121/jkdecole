@@ -1,4 +1,4 @@
-package me.vinceh121.jkdecole.messages;
+package me.vinceh121.jkdecole.requests;
 
 public class Establishment {
 	private boolean active;

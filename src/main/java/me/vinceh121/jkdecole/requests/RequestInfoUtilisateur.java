@@ -1,8 +1,8 @@
-package me.vinceh121.jkdecole.messages;
+package me.vinceh121.jkdecole.requests;
 
 import java.util.List;
 
-public class MessageInfoUtilisateur {
+public class RequestInfoUtilisateur {
 	private String nom, idEleveSelectionne, idEtablissementSelectionne, protection, errmsg;
 	private int type;
 	private List<Establishment> etabs;

@@ -1,4 +1,4 @@
-package me.vinceh121.jkdecole.messages;
+package me.vinceh121.jkdecole.requests;
 
 import java.util.Date;
 import java.util.List;
@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import me.vinceh121.jkdecole.time.TimeTableDay;
 
-public class MessageCalendar {
+public class RequestCalendar {
 	private boolean calendarOpen;
 	private Date currentDate;
 	private String errmsg;

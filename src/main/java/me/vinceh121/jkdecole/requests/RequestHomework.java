@@ -1,4 +1,4 @@
-package me.vinceh121.jkdecole.messages;
+package me.vinceh121.jkdecole.requests;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import me.vinceh121.jkdecole.homework.HWDay;
 
-public class MessageHomework {
+public class RequestHomework {
 	private String errmsg;
 	private boolean hwOpen;
 	private List<HWDay> days;
