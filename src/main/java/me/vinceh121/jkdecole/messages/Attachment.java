@@ -32,12 +32,12 @@ public class Attachment {
 		this.name = name;
 	}
 
-	@JsonProperty("idRessource")
+	@JsonProperty("typeMIME")
 	public String getMimeType() {
 		return mimeType;
 	}
 
-	@JsonProperty("idRessource")
+	@JsonProperty("typeMIME")
 	public void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
 	}
