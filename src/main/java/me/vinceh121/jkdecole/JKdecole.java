@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.vinceh121.jkdecole.activity.ActivityContent;
+import me.vinceh121.jkdecole.grades.GradeMessage;
 import me.vinceh121.jkdecole.messages.CompleteCommunication;
 import me.vinceh121.jkdecole.messages.Inbox;
 import me.vinceh121.jkdecole.requests.RequestCalendar;
@@ -32,7 +33,7 @@ public class JKdecole {
 	private boolean isConnected = false;
 	private String endPoint, token, kdecoleVers = "3.5.2";
 	private long dateOfLastRequest = 0;
-	private String idEtablissement;
+	private String idEstablishment, idStudent;
 
 	public JKdecole() {
 		this(JKdecole.DEFAULT_USER_AGENT);
@@ -62,7 +63,8 @@ public class JKdecole {
 		if (obj.get("success").asBoolean()) {
 			this.token = obj.get("authtoken").asText();
 			this.isConnected = true;
-			this.idEtablissement = this.getInfoUtilisateur().getIdEtablissementSelectionne();
+			this.idEstablishment = this.getInfoUtilisateur().getIdEtablissementSelectionne();
+			this.idStudent = this.getInfoUtilisateur().getIdEleveSelectionne();
 			return true;
 		}
 		return false;
@@ -75,6 +77,49 @@ public class JKdecole {
 
 	public boolean isConnected() {
 		return this.isConnected;
+	}
+
+	/**
+	 * This method needs to be called to notify the backend that the app has started
+	 * and causes the loading of various data such as grades.
+	 */
+	public void sendStarting() throws ClientProtocolException, IOException {
+		this.makeGetRequest("starting");
+	}
+
+	public void getEstablishmentReportCards() throws ClientProtocolException, IOException { // TODO
+		System.out.println(this.makeGetRequest("consulterReleves/idetablissement/" + this.idStudent).toPrettyString());
+	}
+
+	public void getStudentReportCards() throws ClientProtocolException, IOException { // TODO
+		System.out.println(this.makeGetRequest("consulterReleves/ideleve/" + this.idStudent).toPrettyString());
+	}
+
+	/**
+	 * Might need to be called multiple times until backend has loaded grades from
+	 * Pronote
+	 * 
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public GradeMessage getEstablishmentGrades() throws ClientProtocolException, IOException {
+		return this.mapper.readValue(
+				this.makeGetRequest("consulterNotes/idetablissement" + this.idEstablishment).traverse(),
+				GradeMessage.class);
+	}
+
+	/**
+	 * Might need to be called multiple times until backend has loaded grades from
+	 * Pronote
+	 * 
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	public GradeMessage getStudentGrades() throws ClientProtocolException, IOException {
+		return this.mapper.readValue(this.makeGetRequest("consulterNotes/ideleve/" + this.idStudent).traverse(),
+				GradeMessage.class);
 	}
 
 	/**
@@ -108,7 +153,7 @@ public class JKdecole {
 	}
 
 	public List<Article> getNews() throws ClientProtocolException, IOException {
-		final JsonNode obj = this.makeGetRequest("actualites/idetablissement/" + this.idEtablissement);
+		final JsonNode obj = this.makeGetRequest("actualites/idetablissement/" + this.idEstablishment);
 		final List<Article> news = this.mapper.readValue(obj.traverse(), new TypeReference<List<Article>>() {});
 		return news;
 	}
@@ -116,23 +161,31 @@ public class JKdecole {
 	public RequestCalendar getCalendar()
 			throws JsonParseException, JsonMappingException, ClientProtocolException, IOException {
 		return this.mapper.readValue(
-				this.makeGetRequest("calendrier/idetablissement/" + this.idEtablissement).traverse(),
+				this.makeGetRequest("calendrier/idetablissement/" + this.idEstablishment).traverse(),
 				RequestCalendar.class);
 	}
 
 	public ActivityContent getContentForActivity(final int sessionId, final int sessionContentId)
 			throws JsonParseException, JsonMappingException, ClientProtocolException, IOException {
 		return this.mapper.readValue(this.makeGetRequest(
-				"contenuActivite/idetablissement/" + this.idEtablissement + "/" + sessionId + "/" + sessionContentId)
+				"contenuActivite/idetablissement/" + this.idEstablishment + "/" + sessionId + "/" + sessionContentId)
 				.traverse(), ActivityContent.class);
 	}
 
-	public String getIdEtablissement() {
-		return this.idEtablissement;
+	public String getIdEstablishment() {
+		return this.idEstablishment;
 	}
 
-	public void setIdEtablissement(final String idEtablissement) {
-		this.idEtablissement = idEtablissement;
+	public void setIdEstablishment(final String idEtablissement) {
+		this.idEstablishment = idEtablissement;
+	}
+
+	public String getIdStudent() {
+		return idStudent;
+	}
+
+	public void setIdStudent(String idStudent) {
+		this.idStudent = idStudent;
 	}
 
 	public String getToken() {
@@ -166,6 +219,9 @@ public class JKdecole {
 			if (status != 200)
 				System.err.println("Status code: " + status);
 
+			if (response.getEntity() == null)
+				return null;
+
 			final ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			response.getEntity().writeTo(stream);
 
@@ -173,9 +229,13 @@ public class JKdecole {
 
 		});
 
-		if (obj.hasNonNull("errmsg"))
+		if (obj == null)
+			return null;
+
+		if (obj.hasNonNull("errmsg")) {
+			System.out.println(obj.toPrettyString()); // XXX debug
 			throw parseException(obj.get("errmsg"));
-		else
+		} else
 			return obj;
 	}
 
