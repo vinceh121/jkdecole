@@ -17,190 +17,190 @@ public class CompleteCommunication {
 
 	@JsonProperty("expediteurActuel")
 	public Participant getCurrentAuthor() {
-		return currentAuthor;
+		return this.currentAuthor;
 	}
 
 	@JsonProperty("expediteurActuel")
-	public void setCurrentAuthor(Participant currentSender) {
+	public void setCurrentAuthor(final Participant currentSender) {
 		this.currentAuthor = currentSender;
 	}
 
 	@JsonProperty("expediteurInitial")
 	public Participant getInitialAuthor() {
-		return initialAuthor;
+		return this.initialAuthor;
 	}
 
 	@JsonProperty("expediteurInitial")
-	public void setInitialAuthor(Participant initialSender) {
+	public void setInitialAuthor(final Participant initialSender) {
 		this.initialAuthor = initialSender;
 	}
 
 	@JsonProperty("isExpediteurInitial")
 	public boolean isInitialAuthor() {
-		return isInitialAuthor;
+		return this.isInitialAuthor;
 	}
 
 	@JsonProperty("isExpediteurInitial")
-	public void setInitialAuthor(boolean isInitialSender) {
+	public void setInitialAuthor(final boolean isInitialSender) {
 		this.isInitialAuthor = isInitialSender;
 	}
 
 	@JsonProperty("pieceJointe")
 	public boolean hasAttachments() {
-		return attachments;
+		return this.attachments;
 	}
 
 	@JsonProperty("pieceJointe")
-	public void setAttachments(boolean attachments) {
+	public void setAttachments(final boolean attachments) {
 		this.attachments = attachments;
 	}
 
 	@JsonProperty("etatLecture")
 	public boolean isRead() {
-		return read;
+		return this.read;
 	}
 
 	@JsonProperty("etatLecture")
-	public void setRead(boolean read) {
+	public void setRead(final boolean read) {
 		this.read = read;
 	}
 
 	@JsonProperty("signalable")
 	public boolean isReportable() {
-		return reportable;
+		return this.reportable;
 	}
 
 	@JsonProperty("signalable")
-	public void setReportable(boolean reportable) {
+	public void setReportable(final boolean reportable) {
 		this.reportable = reportable;
 	}
 
 	@JsonProperty("objet")
 	public String getSubject() {
-		return subject;
+		return this.subject;
 	}
 
 	@JsonProperty("objet")
-	public void setSubject(String object) {
+	public void setSubject(final String object) {
 		this.subject = object;
 	}
 
 	public String getType() {
-		return type;
+		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
 
 	@JsonProperty("etat")
 	public String getState() {
-		return state;
+		return this.state;
 	}
 
 	@JsonProperty("etat")
-	public void setState(String state) {
+	public void setState(final String state) {
 		this.state = state;
 	}
 
 	@JsonProperty("modeReponse")
 	public String getAnswerMode() {
-		return answerMode;
+		return this.answerMode;
 	}
 
 	@JsonProperty("modeReponse")
-	public void setAnswerMode(String responseMode) {
+	public void setAnswerMode(final String responseMode) {
 		this.answerMode = responseMode;
 	}
 
 	@JsonProperty("premieresLignes")
 	public String getPreview() {
-		return preview;
+		return this.preview;
 	}
 
 	@JsonProperty("premieresLignes")
-	public void setPreview(String preview) {
+	public void setPreview(final String preview) {
 		this.preview = preview;
 	}
 
 	public List<Participant> getParticipants() {
-		return participants;
+		return this.participants;
 	}
 
-	public void setParticipants(List<Participant> participants) {
+	public void setParticipants(final List<Participant> participants) {
 		this.participants = participants;
 	}
 
 	public List<Participation> getParticipations() {
-		return participations;
+		return this.participations;
 	}
 
-	public void setParticipations(List<Participation> participations) {
+	public void setParticipations(final List<Participation> participations) {
 		this.participations = participations;
 	}
 
 	public long getId() {
-		return id;
+		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(final long id) {
 		this.id = id;
 	}
 
 	@JsonProperty("dateDernierMessage")
 	public Date getDateLastMessage() {
-		return dateLastMessage;
+		return this.dateLastMessage;
 	}
 
 	@JsonProperty("dateDernierMessage")
-	public void setDateLastMessage(Date dateLastMessage) {
+	public void setDateLastMessage(final Date dateLastMessage) {
 		this.dateLastMessage = dateLastMessage;
 	}
 
 	@JsonProperty("nbParticipations")
 	public int getParticipationsCount() {
-		return participationsCount;
+		return this.participationsCount;
 	}
 
 	@JsonProperty("nbParticipations")
-	public void setParticipationsCount(int participationsCount) {
+	public void setParticipationsCount(final int participationsCount) {
 		this.participationsCount = participationsCount;
 	}
 
 	@Override
 	public String toString() {
 		return "Communication [currentSender="
-				+ currentAuthor
+				+ this.currentAuthor
 				+ ", initialSender="
-				+ initialAuthor
+				+ this.initialAuthor
 				+ ", isInitialSender="
-				+ isInitialAuthor
+				+ this.isInitialAuthor
 				+ ", attachments="
-				+ attachments
+				+ this.attachments
 				+ ", read="
-				+ read
+				+ this.read
 				+ ", reportable="
-				+ reportable
+				+ this.reportable
 				+ ", object="
-				+ subject
+				+ this.subject
 				+ ", type="
-				+ type
+				+ this.type
 				+ ", state="
-				+ state
+				+ this.state
 				+ ", responseMode="
-				+ answerMode
+				+ this.answerMode
 				+ ", preview="
-				+ preview
+				+ this.preview
 				+ ", participants="
-				+ participants
+				+ this.participants
 				+ ", participations="
-				+ participations
+				+ this.participations
 				+ ", id="
-				+ id
+				+ this.id
 				+ ", dateLastMessage="
-				+ dateLastMessage
+				+ this.dateLastMessage
 				+ ", participationsCount="
-				+ participationsCount
+				+ this.participationsCount
 				+ "]";
 	}
 

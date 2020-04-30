@@ -10,54 +10,54 @@ public class Inbox {
 
 	@JsonProperty("nbMaxCommunicationRecues")
 	public int getMaxComRecieved() {
-		return maxComRecieved;
+		return this.maxComRecieved;
 	}
 
 	@JsonProperty("nbMaxCommunicationRecues")
-	public void setMaxComRecieved(int maxComRecieved) {
+	public void setMaxComRecieved(final int maxComRecieved) {
 		this.maxComRecieved = maxComRecieved;
 	}
 
 	@JsonProperty("nbMaxCaracteresMessage")
 	public int getMaxComLength() {
-		return maxComLength;
+		return this.maxComLength;
 	}
 
 	@JsonProperty("nbMaxCaracteresMessage")
-	public void setMaxComLength(int maxComLength) {
+	public void setMaxComLength(final int maxComLength) {
 		this.maxComLength = maxComLength;
 	}
 
 	@JsonProperty("nbMaxCommunicationBoiteReception")
 	public int getMaxComInbox() {
-		return maxComInbox;
+		return this.maxComInbox;
 	}
 
 	@JsonProperty("nbMaxCommunicationBoiteReception")
-	public void setMaxComInbox(int maxComInbox) {
+	public void setMaxComInbox(final int maxComInbox) {
 		this.maxComInbox = maxComInbox;
 	}
 
 	@JsonProperty("communications")
 	public List<CommunicationPreview> getComs() {
-		return coms;
+		return this.coms;
 	}
 
 	@JsonProperty("communications")
-	public void setComs(List<CommunicationPreview> coms) {
+	public void setComs(final List<CommunicationPreview> coms) {
 		this.coms = coms;
 	}
 
 	@Override
 	public String toString() {
 		return "Inbox [maxComRecieved="
-				+ maxComRecieved
+				+ this.maxComRecieved
 				+ ", maxComLength="
-				+ maxComLength
+				+ this.maxComLength
 				+ ", maxComInbox="
-				+ maxComInbox
+				+ this.maxComInbox
 				+ ", coms="
-				+ coms
+				+ this.coms
 				+ "]";
 	}
 }

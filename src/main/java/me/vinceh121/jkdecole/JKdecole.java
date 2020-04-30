@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
 
@@ -41,7 +42,7 @@ public class JKdecole {
 
 	public JKdecole(final String userAgent) {
 		this.httpClient = HttpClientBuilder.create().setUserAgent(userAgent).build();
-		mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		this.mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 	}
 
 	/**
@@ -53,12 +54,14 @@ public class JKdecole {
 	 */
 	public boolean login(final String username, final String password, final boolean autosetEndpoint)
 			throws ClientProtocolException, IOException {
-		if (autosetEndpoint)
+		if (autosetEndpoint) {
 			this.endPoint = Endpoints.getEndpoint(password.substring(0, 2));
+		}
 
 		final JsonNode obj = this.makeGetRequest("activation/" + username + "/" + password);
-		if (obj == null)
+		if (obj == null) {
 			return false;
+		}
 
 		if (obj.get("success").asBoolean()) {
 			this.token = obj.get("authtoken").asText();
@@ -88,7 +91,8 @@ public class JKdecole {
 	}
 
 	public void getEstablishmentReportCards() throws ClientProtocolException, IOException { // TODO
-		System.out.println(this.makeGetRequest("consulterReleves/idetablissement/" + this.idStudent).toPrettyString());
+		System.out.println(
+				this.makeGetRequest("consulterReleves/idetablissement/" + this.idEstablishment).toPrettyString());
 	}
 
 	public void getStudentReportCards() throws ClientProtocolException, IOException { // TODO
@@ -98,7 +102,7 @@ public class JKdecole {
 	/**
 	 * Might need to be called multiple times until backend has loaded grades from
 	 * Pronote
-	 * 
+	 *
 	 * @return
 	 * @throws ClientProtocolException
 	 * @throws IOException
@@ -112,7 +116,7 @@ public class JKdecole {
 	/**
 	 * Might need to be called multiple times until backend has loaded grades from
 	 * Pronote
-	 * 
+	 *
 	 * @return
 	 * @throws ClientProtocolException
 	 * @throws IOException
@@ -123,24 +127,29 @@ public class JKdecole {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param index -1 for not specified
 	 * @throws IOException
 	 * @throws ClientProtocolException
 	 */
-	public Inbox getInbox(int index) throws ClientProtocolException, IOException {
+	public Inbox getInbox(final int index) throws ClientProtocolException, IOException {
 		final JsonNode obj;
-		if (index == -1)
+		if (index == -1) {
 			obj = this.makeGetRequest("messagerie/boiteReception");
-		else
+		} else {
 			obj = this.makeGetRequest("messagerie/boiteReception/" + index);
+		}
 
 		return this.mapper.readValue(obj.traverse(), Inbox.class);
 	}
 
-	public CompleteCommunication getCommunication(long id) throws ClientProtocolException, IOException {
+	public CompleteCommunication getCommunication(final long id) throws ClientProtocolException, IOException {
 		final JsonNode obj = this.makeGetRequest("messagerie/communication/" + id);
 		return this.mapper.readValue(obj.traverse(), CompleteCommunication.class);
+	}
+
+	public void deleteCommunication(final long id) throws ClientProtocolException, IOException {
+		this.makePutRequest("messagerie/communication/supprimer/" + id);
 	}
 
 	public RequestInfoUtilisateur getInfoUtilisateur()
@@ -181,10 +190,10 @@ public class JKdecole {
 	}
 
 	public String getIdStudent() {
-		return idStudent;
+		return this.idStudent;
 	}
 
-	public void setIdStudent(String idStudent) {
+	public void setIdStudent(final String idStudent) {
 		this.idStudent = idStudent;
 	}
 
@@ -192,7 +201,7 @@ public class JKdecole {
 		return this.token;
 	}
 
-	public void setToken(String token) {
+	public void setToken(final String token) {
 		this.token = token;
 	}
 
@@ -201,56 +210,75 @@ public class JKdecole {
 	}
 
 	public String getEndpoint() {
-		return endPoint;
+		return this.endPoint;
 	}
 
-	public void setKdecoleVersion(String kdecoleVers) {
+	public void setKdecoleVersion(final String kdecoleVers) {
 		this.kdecoleVers = kdecoleVers;
 	}
 
 	public String getKdecoleVersion() {
-		return kdecoleVers;
+		return this.kdecoleVers;
 	}
 
 	private JsonNode makeRequest(final HttpUriRequest req) throws ClientProtocolException, IOException {
 		this.dateOfLastRequest = new Date().getTime();
 		final JsonNode obj = this.httpClient.execute(req, response -> {
 			final int status = response.getStatusLine().getStatusCode();
-			if (status != 200)
+			if (status != 200) {
 				System.err.println("Status code: " + status);
+			}
 
-			if (response.getEntity() == null)
+			if (response.getEntity() == null) {
 				return null;
+			}
 
 			final ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			response.getEntity().writeTo(stream);
 
-			return mapper.readTree(stream.toString());
+			return this.mapper.readTree(stream.toString());
 
 		});
 
-		if (obj == null)
+		if (obj == null) {
 			return null;
+		}
 
 		if (obj.hasNonNull("errmsg")) {
 			System.out.println(obj.toPrettyString()); // XXX debug
-			throw parseException(obj.get("errmsg"));
-		} else
+			throw this.parseException(obj.get("errmsg"));
+		} else {
 			return obj;
+		}
 	}
 
 	private JsonNode makeGetRequest(String request) throws ClientProtocolException, IOException {
-		if (!request.endsWith("/"))
+		if (!request.endsWith("/")) {
 			request = request + "/";
+		}
 		final HttpGet get = new HttpGet(this.endPoint + request + "?_=" + new Date().getTime());
-		get.setHeader("X-Kdecole-Auth", this.token);
-		get.setHeader("X-Kdecole-Date", Long.toString(this.dateOfLastRequest));
-		get.setHeader("X-Kdecole-Vers", this.kdecoleVers);
+		this.addHeaders(get);
 		return this.makeRequest(get);
 	}
 
-	private KdecoleException parseException(JsonNode ex) throws JsonParseException, JsonMappingException, IOException {
-		return mapper.readValue(mapper.treeAsTokens(ex), KdecoleException.class);
+	private JsonNode makePutRequest(String request) throws ClientProtocolException, IOException {
+		if (!request.endsWith("/")) {
+			request = request + "/";
+		}
+		final HttpPut put = new HttpPut(this.endPoint + request + "?_=" + new Date().getTime());
+		this.addHeaders(put);
+		return this.makeRequest(put);
+	}
+
+	private void addHeaders(final HttpUriRequest request) {
+		request.setHeader("X-Kdecole-Auth", this.token);
+		request.setHeader("X-Kdecole-Date", Long.toString(this.dateOfLastRequest));
+		request.setHeader("X-Kdecole-Vers", this.kdecoleVers);
+	}
+
+	private KdecoleException parseException(final JsonNode ex)
+			throws JsonParseException, JsonMappingException, IOException {
+		return this.mapper.readValue(this.mapper.treeAsTokens(ex), KdecoleException.class);
 	}
 
 }

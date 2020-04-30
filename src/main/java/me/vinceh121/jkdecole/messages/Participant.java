@@ -6,26 +6,26 @@ public class Participant {
 	private String id, label;
 
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 
 	@JsonProperty("libelle")
 	public String getLabel() {
-		return label;
+		return this.label;
 	}
 
 	@JsonProperty("libelle")
-	public void setLabel(String label) {
+	public void setLabel(final String label) {
 		this.label = label;
 	}
 
 	@Override
 	public String toString() {
-		return "ComAuthor [id=" + id + ", label=" + label + "]";
+		return "ComAuthor [id=" + this.id + ", label=" + this.label + "]";
 	}
 
 }

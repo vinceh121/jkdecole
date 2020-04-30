@@ -12,41 +12,41 @@ public class GradeMessage {
 
 	@JsonProperty("moduleNotesActif")
 	public boolean isGradeModulesEnabled() {
-		return gradeModulesEnabled;
+		return this.gradeModulesEnabled;
 	}
 
 	@JsonProperty("moduleNotesActif")
-	public void setGradeModulesEnabled(boolean gradeModulesEnabled) {
+	public void setGradeModulesEnabled(final boolean gradeModulesEnabled) {
 		this.gradeModulesEnabled = gradeModulesEnabled;
 	}
 
 	@JsonProperty("codeEleve")
 	public String getStudentCode() {
-		return studentCode;
+		return this.studentCode;
 	}
 
 	@JsonProperty("codeEleve")
-	public void setStudentCode(String studentCode) {
+	public void setStudentCode(final String studentCode) {
 		this.studentCode = studentCode;
 	}
 
 	@JsonProperty("nbNotesMax")
 	public int getMaxGrades() {
-		return maxGrades;
+		return this.maxGrades;
 	}
 
 	@JsonProperty("nbNotesMax")
-	public void setMaxGrades(int maxGrades) {
+	public void setMaxGrades(final int maxGrades) {
 		this.maxGrades = maxGrades;
 	}
 
 	@JsonProperty("listeNotes")
 	public List<Grade> getGrades() {
-		return grades;
+		return this.grades;
 	}
 
 	@JsonProperty("listeNotes")
-	public void setGrades(List<Grade> grades) {
+	public void setGrades(final List<Grade> grades) {
 		this.grades = grades;
 	}
 

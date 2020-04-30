@@ -27,7 +27,7 @@ public class KdecoleException extends IOException {
 		return this.code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(final int code) {
 		this.code = code;
 	}
 
@@ -36,7 +36,7 @@ public class KdecoleException extends IOException {
 		return this.message;
 	}
 
-	public void setMessage(String message) {
+	public void setMessage(final String message) {
 		this.message = message;
 	}
 
@@ -46,7 +46,7 @@ public class KdecoleException extends IOException {
 	}
 
 	@JsonProperty("tempsValide")
-	public void setTimeValid(int timeValid) {
+	public void setTimeValid(final int timeValid) {
 		this.timeValid = timeValid;
 	}
 
@@ -56,7 +56,7 @@ public class KdecoleException extends IOException {
 	}
 
 	@JsonProperty("titre")
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
@@ -64,7 +64,7 @@ public class KdecoleException extends IOException {
 		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
 

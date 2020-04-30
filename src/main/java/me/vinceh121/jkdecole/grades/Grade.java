@@ -10,68 +10,68 @@ public class Grade {
 	private Date date;
 
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 
 	@JsonProperty("titreDevoir")
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	@JsonProperty("titreDevoir")
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
 	@JsonProperty("matiere")
 	public String getSubject() {
-		return subject;
+		return this.subject;
 	}
 
 	@JsonProperty("matiere")
-	public void setSubject(String subject) {
+	public void setSubject(final String subject) {
 		this.subject = subject;
 	}
 
 	@JsonProperty("note")
 	public String getGrade() {
-		return grade;
+		return this.grade;
 	}
 
 	@JsonProperty("note")
-	public void setGrade(String grade) {
+	public void setGrade(final String grade) {
 		this.grade = grade;
 	}
 
 	@JsonProperty("coefficient")
 	public double getCoef() {
-		return coef;
+		return this.coef;
 	}
 
 	@JsonProperty("coefficient")
-	public void setCoef(double coef) {
+	public void setCoef(final double coef) {
 		this.coef = coef;
 	}
 
 	@JsonProperty("bareme")
 	public double getBareme() {
-		return bareme;
+		return this.bareme;
 	}
 
 	@JsonProperty("bareme")
-	public void setBareme(double bareme) {
+	public void setBareme(final double bareme) {
 		this.bareme = bareme;
 	}
 
 	public Date getDate() {
-		return date;
+		return this.date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(final Date date) {
 		this.date = date;
 	}
 

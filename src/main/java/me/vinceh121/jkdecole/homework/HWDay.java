@@ -2,7 +2,7 @@ package me.vinceh121.jkdecole.homework;
 
 import java.util.Date;
 
-public class HWDay { // TODO json serialization 
+public class HWDay { // TODO json serialization
 	private Date date;
 
 	private Homework[] homeworks;

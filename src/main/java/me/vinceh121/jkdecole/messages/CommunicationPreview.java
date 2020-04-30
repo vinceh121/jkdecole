@@ -13,146 +13,146 @@ public class CommunicationPreview {
 
 	@JsonProperty("expediteurActuel")
 	public Participant getCurrentAuthor() {
-		return currentAuthor;
+		return this.currentAuthor;
 	}
 
 	@JsonProperty("expediteurActuel")
-	public void setCurrentAuthor(Participant currentAuthor) {
+	public void setCurrentAuthor(final Participant currentAuthor) {
 		this.currentAuthor = currentAuthor;
 	}
 
 	@JsonProperty("expediteurInitial")
 	public Participant getInitialAuthor() {
-		return initialAuthor;
+		return this.initialAuthor;
 	}
 
 	@JsonProperty("expediteurInitial")
-	public void setInitialAuthor(Participant firstAuthor) {
+	public void setInitialAuthor(final Participant firstAuthor) {
 		this.initialAuthor = firstAuthor;
 	}
 
 	public boolean isSignalable() {
-		return signalable;
+		return this.signalable;
 	}
 
-	public void setSignalable(boolean signalable) {
+	public void setSignalable(final boolean signalable) {
 		this.signalable = signalable;
 	}
 
 	@JsonProperty("isExpediteurInitial")
 	public boolean isInitialAuthor() {
-		return isInitialAuthor;
+		return this.isInitialAuthor;
 	}
 
 	@JsonProperty("isExpediteurInitial")
-	public void setInitialAuthor(boolean isSenderInitial) {
+	public void setInitialAuthor(final boolean isSenderInitial) {
 		this.isInitialAuthor = isSenderInitial;
 	}
 
 	@JsonProperty("pieceJointe")
 	public boolean hasAttachments() {
-		return attachments;
+		return this.attachments;
 	}
 
 	@JsonProperty("pieceJointe")
-	public void setAttachments(boolean attachments) {
+	public void setAttachments(final boolean attachments) {
 		this.attachments = attachments;
 	}
 
 	@JsonProperty("etatLecture")
 	public boolean isRead() {
-		return read;
+		return this.read;
 	}
 
 	@JsonProperty("etatLecture")
-	public void setRead(boolean read) {
+	public void setRead(final boolean read) {
 		this.read = read;
 	}
 
 	public long getId() {
-		return id;
+		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(final long id) {
 		this.id = id;
 	}
 
 	@JsonProperty("dateDernierMessage")
 	public Date getLastMessage() {
-		return lastMessage;
+		return this.lastMessage;
 	}
 
 	@JsonProperty("dateDernierMessage")
-	public void setLastMessage(Date lastMessage) {
+	public void setLastMessage(final Date lastMessage) {
 		this.lastMessage = lastMessage;
 	}
 
 	@JsonProperty("objet")
 	public String getSubject() {
-		return subject;
+		return this.subject;
 	}
 
 	@JsonProperty("objet")
-	public void setSubject(String subject) {
+	public void setSubject(final String subject) {
 		this.subject = subject;
 	}
 
 	@JsonProperty("etat")
 	public String getState() {
-		return state;
+		return this.state;
 	}
 
 	@JsonProperty("etat")
-	public void setState(String state) {
+	public void setState(final String state) {
 		this.state = state;
 	}
 
 	@JsonProperty("premieresLignes")
 	public String getPreview() {
-		return preview;
+		return this.preview;
 	}
 
 	@JsonProperty("premieresLignes")
-	public void setPreview(String preview) {
+	public void setPreview(final String preview) {
 		this.preview = preview;
 	}
 
 	@JsonProperty("modeReponse")
 	public String getAnswerMode() {
-		return answerMode;
+		return this.answerMode;
 	}
 
 	@JsonProperty("modeReponse")
-	public void setAnswerMode(String answerMode) {
+	public void setAnswerMode(final String answerMode) {
 		this.answerMode = answerMode;
 	}
 
 	@Override
 	public String toString() {
 		return "CommunicationPreview [currentAuthor="
-				+ currentAuthor
+				+ this.currentAuthor
 				+ ", firstAuthor="
-				+ initialAuthor
+				+ this.initialAuthor
 				+ ", signalable="
-				+ signalable
+				+ this.signalable
 				+ ", isSenderInitial="
-				+ isInitialAuthor
+				+ this.isInitialAuthor
 				+ ", attachments="
-				+ attachments
+				+ this.attachments
 				+ ", read="
-				+ read
+				+ this.read
 				+ ", id="
-				+ id
+				+ this.id
 				+ ", lastMessage="
-				+ lastMessage
+				+ this.lastMessage
 				+ ", subject="
-				+ subject
+				+ this.subject
 				+ ", state="
-				+ state
+				+ this.state
 				+ ", preview="
-				+ preview
+				+ this.preview
 				+ ", answerMode="
-				+ answerMode
+				+ this.answerMode
 				+ "]";
 	}
 

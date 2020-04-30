@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import me.vinceh121.jkdecole.Attachment;
+
 public class Participation {
 	private long id;
 	private Participant author;
@@ -14,101 +16,101 @@ public class Participation {
 	private boolean read;
 
 	public long getId() {
-		return id;
+		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(final long id) {
 		this.id = id;
 	}
 
 	@JsonProperty("etatLecture")
 	public boolean isRead() {
-		return read;
+		return this.read;
 	}
 
 	@JsonProperty("etatLecture")
-	public void setRead(boolean read) {
+	public void setRead(final boolean read) {
 		this.read = read;
 	}
 
 	@JsonProperty("redacteur")
 	public Participant getAuthor() {
-		return author;
+		return this.author;
 	}
 
 	@JsonProperty("redacteur")
-	public void setAuthor(Participant author) {
+	public void setAuthor(final Participant author) {
 		this.author = author;
 	}
 
 	@JsonProperty("dateEnvoi")
 	public Date getDateSent() {
-		return dateSent;
+		return this.dateSent;
 	}
 
 	@JsonProperty("dateEnvoi")
-	public void setDateSent(Date dateSend) {
+	public void setDateSent(final Date dateSend) {
 		this.dateSent = dateSend;
 	}
 
 	@JsonProperty("corpsMessage")
 	public String getBody() {
-		return body;
+		return this.body;
 	}
 
 	@JsonProperty("corpsMessage")
-	public void setBody(String body) {
+	public void setBody(final String body) {
 		this.body = body;
 	}
 
 	@JsonProperty("premieresLignes")
 	public String getPreview() {
-		return preview;
+		return this.preview;
 	}
 
 	@JsonProperty("premieresLignes")
-	public void setPreview(String preview) {
+	public void setPreview(final String preview) {
 		this.preview = preview;
 	}
 
 	@JsonProperty("pjs")
 	public List<Attachment> getAttachments() {
-		return attachments;
+		return this.attachments;
 	}
 
 	@JsonProperty("pjs")
-	public void setAttachments(List<Attachment> attachments) {
+	public void setAttachments(final List<Attachment> attachments) {
 		this.attachments = attachments;
 	}
 
 	@JsonProperty("libelleObjet")
 	public String getLabel() {
-		return label;
+		return this.label;
 	}
 
 	@JsonProperty("libelleObjet")
-	public void setLabel(String label) {
+	public void setLabel(final String label) {
 		this.label = label;
 	}
 
 	@Override
 	public String toString() {
 		return "Participation [id="
-				+ id
+				+ this.id
 				+ ", author="
-				+ author
+				+ this.author
 				+ ", dateSent="
-				+ dateSent
+				+ this.dateSent
 				+ ", body="
-				+ body
+				+ this.body
 				+ ", preview="
-				+ preview
+				+ this.preview
 				+ ", label="
-				+ label
+				+ this.label
 				+ ", attachments="
-				+ attachments
+				+ this.attachments
 				+ ", read="
-				+ read
+				+ this.read
 				+ "]";
 	}
 
