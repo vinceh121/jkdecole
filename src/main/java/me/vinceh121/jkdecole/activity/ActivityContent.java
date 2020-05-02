@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import me.vinceh121.jkdecole.Attachment;
+
 public class ActivityContent {
 	private String htmlContent, errmsg, subject, title, type, url;
 	private Date date;
