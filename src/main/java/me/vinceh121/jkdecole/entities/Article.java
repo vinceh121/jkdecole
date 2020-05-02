@@ -1,11 +1,11 @@
-package me.vinceh121.jkdecole;
+package me.vinceh121.jkdecole.entities;
 
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Article {
-	private String author, senderId, errmsg, title, type, uid;
+	private String author, senderId, title, type, uid;
 	private Date date;
 
 	@JsonProperty("auteur")
@@ -24,14 +24,6 @@ public class Article {
 
 	public void setSenderId(final String senderId) {
 		this.senderId = senderId;
-	}
-
-	public String getErrmsg() {
-		return this.errmsg;
-	}
-
-	public void setErrmsg(final String errmsg) {
-		this.errmsg = errmsg;
 	}
 
 	@JsonProperty("titre")

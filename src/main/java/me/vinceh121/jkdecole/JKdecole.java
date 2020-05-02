@@ -19,12 +19,13 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import me.vinceh121.jkdecole.activity.ActivityContent;
-import me.vinceh121.jkdecole.grades.GradeMessage;
-import me.vinceh121.jkdecole.messages.CompleteCommunication;
-import me.vinceh121.jkdecole.messages.Inbox;
-import me.vinceh121.jkdecole.requests.RequestCalendar;
-import me.vinceh121.jkdecole.requests.RequestInfoUtilisateur;
+import me.vinceh121.jkdecole.entities.Article;
+import me.vinceh121.jkdecole.entities.activity.ActivityContent;
+import me.vinceh121.jkdecole.entities.grades.GradeMessage;
+import me.vinceh121.jkdecole.entities.info.UserInfo;
+import me.vinceh121.jkdecole.entities.messages.CompleteCommunication;
+import me.vinceh121.jkdecole.entities.messages.Inbox;
+import me.vinceh121.jkdecole.entities.time.Calendar;
 
 public class JKdecole {
 	public static final String DEFAULT_USER_AGENT
@@ -66,8 +67,8 @@ public class JKdecole {
 		if (obj.get("success").asBoolean()) {
 			this.token = obj.get("authtoken").asText();
 			this.isConnected = true;
-			this.idEstablishment = this.getInfoUtilisateur().getIdEtablissementSelectionne();
-			this.idStudent = this.getInfoUtilisateur().getIdEleveSelectionne();
+			this.idEstablishment = this.getUserInfo().getIdEtablissementSelectionne();
+			this.idStudent = this.getUserInfo().getIdEleveSelectionne();
 			return true;
 		}
 		return false;
@@ -143,6 +144,10 @@ public class JKdecole {
 		return this.mapper.readValue(obj.traverse(), Inbox.class);
 	}
 
+	public int getNumberOfUnreadEmails() throws ClientProtocolException, IOException {
+		return this.makeGetRequest("messagerie/info").get("nbMessagesNonLus").asInt();
+	}
+
 	public CompleteCommunication getCommunication(final long id) throws ClientProtocolException, IOException {
 		final JsonNode obj = this.makeGetRequest("messagerie/communication/" + id);
 		return this.mapper.readValue(obj.traverse(), CompleteCommunication.class);
@@ -152,13 +157,9 @@ public class JKdecole {
 		this.makePutRequest("messagerie/communication/supprimer/" + id);
 	}
 
-	public RequestInfoUtilisateur getInfoUtilisateur()
+	public UserInfo getUserInfo()
 			throws JsonParseException, JsonMappingException, ClientProtocolException, IOException {
-		return this.mapper.readValue(this.makeGetRequest("infoutilisateur").traverse(), RequestInfoUtilisateur.class);
-	}
-
-	public int getNumberOfUnreadEmails() throws ClientProtocolException, IOException {
-		return this.makeGetRequest("messagerie/info").get("nbMessagesNonLus").asInt();
+		return this.mapper.readValue(this.makeGetRequest("infoutilisateur").traverse(), UserInfo.class);
 	}
 
 	public List<Article> getNews() throws ClientProtocolException, IOException {
@@ -167,11 +168,11 @@ public class JKdecole {
 		return news;
 	}
 
-	public RequestCalendar getCalendar()
+	public Calendar getCalendar()
 			throws JsonParseException, JsonMappingException, ClientProtocolException, IOException {
 		return this.mapper.readValue(
 				this.makeGetRequest("calendrier/idetablissement/" + this.idEstablishment).traverse(),
-				RequestCalendar.class);
+				Calendar.class);
 	}
 
 	public ActivityContent getContentForActivity(final int sessionId, final int sessionContentId)
@@ -245,7 +246,6 @@ public class JKdecole {
 		}
 
 		if (obj.hasNonNull("errmsg")) {
-			System.out.println(obj.toPrettyString()); // XXX debug
 			throw this.parseException(obj.get("errmsg"));
 		} else {
 			return obj;

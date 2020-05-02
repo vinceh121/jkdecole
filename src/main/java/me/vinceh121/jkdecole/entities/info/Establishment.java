@@ -1,4 +1,4 @@
-package me.vinceh121.jkdecole.requests;
+package me.vinceh121.jkdecole.entities.info;
 
 public class Establishment {
 	private boolean active;

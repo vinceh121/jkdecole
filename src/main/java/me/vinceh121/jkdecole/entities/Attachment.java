@@ -1,4 +1,4 @@
-package me.vinceh121.jkdecole;
+package me.vinceh121.jkdecole.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

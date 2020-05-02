@@ -1,23 +1,12 @@
-package me.vinceh121.jkdecole.requests;
+package me.vinceh121.jkdecole.entities.homework;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import me.vinceh121.jkdecole.homework.HWDay;
-
-public class RequestHomework {
-	private String errmsg;
+public class Agenda {
 	private boolean hwOpen;
 	private List<HWDay> days;
-
-	public String getErrmsg() {
-		return this.errmsg;
-	}
-
-	public void setErrmsg(final String errmsg) {
-		this.errmsg = errmsg;
-	}
 
 	@JsonProperty("tafOuvert")
 	public boolean isHwOpen() {

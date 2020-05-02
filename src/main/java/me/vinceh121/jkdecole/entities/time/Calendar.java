@@ -1,16 +1,13 @@
-package me.vinceh121.jkdecole.requests;
+package me.vinceh121.jkdecole.entities.time;
 
 import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import me.vinceh121.jkdecole.time.TimeTableDay;
-
-public class RequestCalendar {
+public class Calendar {
 	private boolean calendarOpen;
 	private Date currentDate;
-	private String errmsg;
 	private List<TimeTableDay> days;
 
 	@JsonProperty("cdtOuvert")
@@ -29,14 +26,6 @@ public class RequestCalendar {
 
 	public void setCurrentDate(final Date currentDate) {
 		this.currentDate = currentDate;
-	}
-
-	public String getErrmsg() {
-		return this.errmsg;
-	}
-
-	public void setErrmsg(final String errmsg) {
-		this.errmsg = errmsg;
 	}
 
 	@JsonProperty("listeJourCdt")

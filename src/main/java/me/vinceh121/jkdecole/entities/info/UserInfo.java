@@ -1,9 +1,9 @@
-package me.vinceh121.jkdecole.requests;
+package me.vinceh121.jkdecole.entities.info;
 
 import java.util.List;
 
-public class RequestInfoUtilisateur {
-	private String nom, idEleveSelectionne, idEtablissementSelectionne, protection, errmsg;
+public class UserInfo {
+	private String nom, idEleveSelectionne, idEtablissementSelectionne, protection;
 	private int type;
 	private List<Establishment> etabs;
 
@@ -45,14 +45,6 @@ public class RequestInfoUtilisateur {
 
 	public void setType(final int type) {
 		this.type = type;
-	}
-
-	public String getErrmsg() {
-		return this.errmsg;
-	}
-
-	public void setErrmsg(final String errmsg) {
-		this.errmsg = errmsg;
 	}
 
 	public List<Establishment> getEtabs() {

@@ -1,4 +1,4 @@
-package me.vinceh121.jkdecole.homework;
+package me.vinceh121.jkdecole.entities.homework;
 
 import java.util.Date;
 

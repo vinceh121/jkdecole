@@ -1,14 +1,14 @@
-package me.vinceh121.jkdecole.activity;
+package me.vinceh121.jkdecole.entities.activity;
 
 import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import me.vinceh121.jkdecole.Attachment;
+import me.vinceh121.jkdecole.entities.Attachment;
 
 public class ActivityContent {
-	private String htmlContent, errmsg, subject, title, type, url;
+	private String htmlContent, subject, title, type, url;
 	private Date date;
 	private boolean done, homework, doneEditable;
 	private List<Attachment> attachments;
@@ -21,14 +21,6 @@ public class ActivityContent {
 	@JsonProperty("codeHTML")
 	public void setHtmlContent(final String htmlContent) {
 		this.htmlContent = htmlContent;
-	}
-
-	public String getErrmsg() {
-		return this.errmsg;
-	}
-
-	public void setErrmsg(final String errmsg) {
-		this.errmsg = errmsg;
 	}
 
 	@JsonProperty("matiere")

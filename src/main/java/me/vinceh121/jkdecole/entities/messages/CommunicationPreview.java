@@ -1,4 +1,4 @@
-package me.vinceh121.jkdecole.messages;
+package me.vinceh121.jkdecole.entities.messages;
 
 import java.util.Date;
 

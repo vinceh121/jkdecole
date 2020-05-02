@@ -1,11 +1,11 @@
-package me.vinceh121.jkdecole.messages;
+package me.vinceh121.jkdecole.entities.messages;
 
 import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import me.vinceh121.jkdecole.Attachment;
+import me.vinceh121.jkdecole.entities.Attachment;
 
 public class Participation {
 	private long id;

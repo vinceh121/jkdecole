@@ -1,4 +1,4 @@
-package me.vinceh121.jkdecole.grades;
+package me.vinceh121.jkdecole.entities.grades;
 
 import java.util.List;
 
