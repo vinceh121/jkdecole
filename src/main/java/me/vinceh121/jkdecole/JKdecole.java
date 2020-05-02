@@ -42,7 +42,11 @@ public class JKdecole {
 	}
 
 	public JKdecole(final String userAgent) {
-		this.httpClient = HttpClientBuilder.create().setUserAgent(userAgent).build();
+		this(HttpClientBuilder.create().setUserAgent(userAgent).build());
+
+	}
+
+	public JKdecole(final HttpClient client) {
 		this.mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 	}
 
