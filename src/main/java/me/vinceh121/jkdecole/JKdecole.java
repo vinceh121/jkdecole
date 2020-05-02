@@ -43,7 +43,6 @@ public class JKdecole {
 
 	public JKdecole(final String userAgent) {
 		this(HttpClientBuilder.create().setUserAgent(userAgent).build());
-
 	}
 
 	public JKdecole(final HttpClient client) {

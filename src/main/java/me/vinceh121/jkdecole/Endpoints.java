@@ -1,11 +1,15 @@
 package me.vinceh121.jkdecole;
 
-import java.util.HashMap;
+import java.util.List;
+
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
+import org.apache.commons.collections4.multimap.UnmodifiableMultiValuedMap;
 
 public final class Endpoints {
-	private static final HashMap<String, String> endpoints = new HashMap<>();
+	private static final ArrayListValuedHashMap<String, String> endpoints = new ArrayListValuedHashMap<>();
 
-	static { // FIXME find a solution for dupes
+	static {
 		// From mon-ent-occitanie
 		Endpoints.endpoints.put("PA", "http://www.preprod.eap.entmip.fr/mobilite/");
 		Endpoints.endpoints.put("PN", "http://mobilite.entmip.kdecole.fr/mobilite/");
@@ -57,7 +61,28 @@ public final class Endpoints {
 		Endpoints.endpoints.put("QU", "http://mobilite.qualification.savoirsnumeriques62.fr/mobilite/");
 	}
 
+	/**
+	 * Get the first endpoint matching the given prefix
+	 * @param prefix the password two char prefix
+	 * @return the endpoint url
+	 */
 	public static String getEndpoint(final String prefix) {
+		return Endpoints.getEndpoints(prefix).get(0);
+	}
+
+	/**
+	 * Get the list of endpoints matching the given prefix
+	 * @param prefix the password two char prefix
+	 * @return the List of endpoint urls
+	 */
+	public static List<String> getEndpoints(final String prefix) {
 		return Endpoints.endpoints.get(prefix);
+	}
+	
+	/**
+	 * @return An unmodifiable multi value map of the endpoints for password prefixes
+	 */
+	public static MultiValuedMap<String, String> getEndpoints() {
+		return UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(Endpoints.endpoints);
 	}
 }
