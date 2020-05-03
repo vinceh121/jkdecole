@@ -31,7 +31,7 @@ public class JKdecole {
 	public static final String DEFAULT_USER_AGENT
 			= "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.128 Electron/4.1.5 Safari/537.36";
 	private final ObjectMapper mapper = new ObjectMapper();
-	private HttpClient httpClient;
+	private final HttpClient httpClient;
 	private boolean isConnected = false;
 	private String endPoint, token, kdecoleVers = "3.5.2";
 	private long dateOfLastRequest = 0;
@@ -46,6 +46,7 @@ public class JKdecole {
 	}
 
 	public JKdecole(final HttpClient client) {
+		this.httpClient = client;
 		this.mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 	}
 
