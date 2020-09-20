@@ -61,8 +61,8 @@ public final class Endpoints {
 		Endpoints.endpoints.put("QU", "http://mobilite.qualification.savoirsnumeriques62.fr/mobilite/");
 		
 		// From Mon Bureau Numérique
-		Endpoints.endpoints.put("PR", "http://mobilite.monbureaunumerique.fr/mobilite/");
-		Endpoints.endpoints.put("PP", "http://mobilite.preprod.monbureaunumerique.fr/mobilite/");
+		Endpoints.endpoints.put("PR", "https://mobilite.monbureaunumerique.fr/mobilite/");
+		Endpoints.endpoints.put("PP", "https://mobilite.preprod.monbureaunumerique.fr/mobilite/");
 	}
 
 	/**
