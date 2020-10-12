@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import me.vinceh121.jkdecole.entities.homework.Agenda;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -177,6 +178,13 @@ public class JKdecole {
 		return this.mapper.readValue(
 				this.makeGetRequest("calendrier/idetablissement/" + this.idEstablishment).traverse(),
 				Calendar.class);
+	}
+
+	public Agenda getAgenda()
+			throws JsonParseException, JsonMappingException, ClientProtocolException, IOException {
+		return this.mapper.readValue(
+				this.makeGetRequest("travailAFaire/ideleve/" + this.idStudent).traverse(),
+				Agenda.class);
 	}
 
 	public ActivityContent getContentForActivity(final int sessionId, final int sessionContentId)
