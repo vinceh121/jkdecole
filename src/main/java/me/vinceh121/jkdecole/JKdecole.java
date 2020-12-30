@@ -8,6 +8,7 @@ import java.util.List;
 import me.vinceh121.jkdecole.entities.homework.Agenda;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -159,7 +160,15 @@ public class JKdecole {
 	}
 
 	public void deleteCommunication(final long id) throws ClientProtocolException, IOException {
-		this.makePutRequest("messagerie/communication/supprimer/" + id);
+		this.makeDeleteRequest("messagerie/communication/supprimer/" + id);
+	}
+
+	public void reportCommunication(final long id) throws ClientProtocolException, IOException {
+		this.makePutRequest("messagerie/communication/signaler/" + id);
+	}
+
+	public void setCommunicationRead(final long id) throws ClientProtocolException, IOException {
+		this.makePutRequest("messagerie/communication/lu/" + id);
 	}
 
 	public UserInfo getUserInfo()
@@ -169,8 +178,7 @@ public class JKdecole {
 
 	public List<Article> getNews() throws ClientProtocolException, IOException {
 		final JsonNode obj = this.makeGetRequest("actualites/idetablissement/" + this.idEstablishment);
-		final List<Article> news = this.mapper.readValue(obj.traverse(), new TypeReference<List<Article>>() {});
-		return news;
+		return this.mapper.readValue(obj.traverse(), new TypeReference<List<Article>>() {});
 	}
 
 	public Calendar getCalendar()
@@ -280,6 +288,12 @@ public class JKdecole {
 		final HttpPut put = new HttpPut(this.endPoint + request + "?_=" + new Date().getTime());
 		this.addHeaders(put);
 		return this.makeRequest(put);
+	}
+
+	private JsonNode makeDeleteRequest(String request) throws ClientProtocolException, IOException {
+		final HttpDelete delete = new HttpDelete(this.endPoint + (request.endsWith("/") ? request : request + '/')+ "?_=" + new Date().getTime());
+		this.addHeaders(delete);
+		return this.makeRequest(delete);
 	}
 
 	private void addHeaders(final HttpUriRequest request) {
