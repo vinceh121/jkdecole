@@ -291,7 +291,7 @@ public class JKdecole {
 	}
 
 	private JsonNode makeDeleteRequest(String request) throws ClientProtocolException, IOException {
-		final HttpDelete delete = new HttpDelete(this.endPoint + (request.endsWith("/") ? request : request + '/')+new Date().getTime());
+		final HttpDelete delete = new HttpDelete(this.endPoint + (request.endsWith("/") ? request : request + '/')+ "?_=" + new Date().getTime());
 		this.addHeaders(delete);
 		return this.makeRequest(delete);
 	}
