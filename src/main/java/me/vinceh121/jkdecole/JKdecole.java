@@ -5,14 +5,13 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import me.vinceh121.jkdecole.entities.homework.Agenda;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.hc.client5.http.ClientProtocolException;
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.client5.http.classic.methods.HttpDelete;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpPut;
+import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -24,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import me.vinceh121.jkdecole.entities.Article;
 import me.vinceh121.jkdecole.entities.activity.ActivityContent;
 import me.vinceh121.jkdecole.entities.grades.GradeMessage;
+import me.vinceh121.jkdecole.entities.homework.Agenda;
 import me.vinceh121.jkdecole.entities.info.UserInfo;
 import me.vinceh121.jkdecole.entities.messages.CompleteCommunication;
 import me.vinceh121.jkdecole.entities.messages.Inbox;
@@ -245,7 +245,7 @@ public class JKdecole {
 	private JsonNode makeRequest(final HttpUriRequest req) throws ClientProtocolException, IOException {
 		this.dateOfLastRequest = new Date().getTime();
 		final JsonNode obj = this.httpClient.execute(req, response -> {
-			final int status = response.getStatusLine().getStatusCode();
+			final int status = response.getCode();
 			if (status != 200) {
 				System.err.println("Status code: " + status);
 			}
