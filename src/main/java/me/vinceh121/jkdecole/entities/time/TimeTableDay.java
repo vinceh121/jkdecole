@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TimeTableDay {
 	private Date date;
+	@JsonProperty("listeSeances")
 	private List<Session> sessions;
 
 	public Date getDate() {
@@ -17,12 +18,10 @@ public class TimeTableDay {
 		this.date = date;
 	}
 
-	@JsonProperty("listeSeances")
 	public List<Session> getSessions() {
 		return this.sessions;
 	}
 
-	@JsonProperty("listeSeances")
 	public void setSessions(final List<Session> sessions) {
 		this.sessions = sessions;
 	}

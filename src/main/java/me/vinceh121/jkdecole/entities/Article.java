@@ -5,15 +5,19 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Article {
-	private String author, senderId, title, type, uid;
+	@JsonProperty("auteur")
+	private String author;
+	private String senderId;
+	@JsonProperty("titre")
+	private String title;
+	private String type;
+	private String uid;
 	private Date date;
 
-	@JsonProperty("auteur")
 	public String getAuthor() {
 		return this.author;
 	}
 
-	@JsonProperty("auteur")
 	public void setAuthor(final String author) {
 		this.author = author;
 	}
@@ -26,12 +30,10 @@ public class Article {
 		this.senderId = senderId;
 	}
 
-	@JsonProperty("titre")
 	public String getTitle() {
 		return this.title;
 	}
 
-	@JsonProperty("titre")
 	public void setTitle(final String title) {
 		this.title = title;
 	}

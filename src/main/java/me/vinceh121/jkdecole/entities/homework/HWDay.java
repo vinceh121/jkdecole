@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class HWDay { // TODO json serialization
 	private Date date;
-
+	@JsonProperty("listTravail")
 	private Homework[] homeworks;
 
 	public Date getDate() {
@@ -17,14 +17,11 @@ public class HWDay { // TODO json serialization
 		this.date = date;
 	}
 
-	@JsonProperty("listTravail")
 	public Homework[] getHomeworks() {
 		return this.homeworks;
 	}
 
-	@JsonProperty("listTravail")
 	public void setHomeworks(final Homework[] homeworks) {
 		this.homeworks = homeworks;
 	}
-
 }

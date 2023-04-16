@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SessionContent {
 	private Date date;
-	private String title, type;
+	@JsonProperty("titre")
+	private String title;
+	private String type;
 	private int uid;
 
 	public Date getDate() {
@@ -17,12 +19,10 @@ public class SessionContent {
 		this.date = date;
 	}
 
-	@JsonProperty("titre")
 	public String getTitle() {
 		return this.title;
 	}
 
-	@JsonProperty("titre")
 	public void setTitle(final String title) {
 		this.title = title;
 	}

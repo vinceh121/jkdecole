@@ -9,10 +9,19 @@ import me.vinceh121.jkdecole.entities.Attachment;
 
 public class Participation {
 	private long id;
+	@JsonProperty("redacteur")
 	private Participant author;
+	@JsonProperty("dateEnvoi")
 	private Date dateSent;
-	private String body, preview, label;
+	@JsonProperty("corpsMessage")
+	private String body;
+	@JsonProperty("premieresLignes")
+	private String preview;
+	@JsonProperty("libelleObjet")
+	private String label;
+	@JsonProperty("pjs")
 	private List<Attachment> attachments;
+	@JsonProperty("etatLecture")
 	private boolean read;
 
 	public long getId() {
@@ -23,72 +32,58 @@ public class Participation {
 		this.id = id;
 	}
 
-	@JsonProperty("etatLecture")
 	public boolean isRead() {
 		return this.read;
 	}
 
-	@JsonProperty("etatLecture")
 	public void setRead(final boolean read) {
 		this.read = read;
 	}
 
-	@JsonProperty("redacteur")
 	public Participant getAuthor() {
 		return this.author;
 	}
 
-	@JsonProperty("redacteur")
 	public void setAuthor(final Participant author) {
 		this.author = author;
 	}
 
-	@JsonProperty("dateEnvoi")
 	public Date getDateSent() {
 		return this.dateSent;
 	}
 
-	@JsonProperty("dateEnvoi")
 	public void setDateSent(final Date dateSend) {
 		this.dateSent = dateSend;
 	}
 
-	@JsonProperty("corpsMessage")
 	public String getBody() {
 		return this.body;
 	}
 
-	@JsonProperty("corpsMessage")
 	public void setBody(final String body) {
 		this.body = body;
 	}
 
-	@JsonProperty("premieresLignes")
 	public String getPreview() {
 		return this.preview;
 	}
 
-	@JsonProperty("premieresLignes")
 	public void setPreview(final String preview) {
 		this.preview = preview;
 	}
 
-	@JsonProperty("pjs")
 	public List<Attachment> getAttachments() {
 		return this.attachments;
 	}
 
-	@JsonProperty("pjs")
 	public void setAttachments(final List<Attachment> attachments) {
 		this.attachments = attachments;
 	}
 
-	@JsonProperty("libelleObjet")
 	public String getLabel() {
 		return this.label;
 	}
 
-	@JsonProperty("libelleObjet")
 	public void setLabel(final String label) {
 		this.label = label;
 	}

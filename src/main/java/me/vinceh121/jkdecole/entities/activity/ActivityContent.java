@@ -8,37 +8,44 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import me.vinceh121.jkdecole.entities.Attachment;
 
 public class ActivityContent {
-	private String htmlContent, subject, title, type, url;
+	@JsonProperty("codeHTML")
+	private String htmlContent;
+	@JsonProperty("matiere")
+	private String subject;
+	@JsonProperty("titre")
+	private String title;
+	private String type;
+	private String url;
 	private Date date;
-	private boolean done, homework, doneEditable;
+	@JsonProperty("flagRealise")
+	private boolean done;
+	@JsonProperty("flagTravailAFaire")
+	private boolean homework;
+	@JsonProperty("isFaitModifiable")
+	private boolean doneEditable;
+	@JsonProperty("pjs")
 	private List<Attachment> attachments;
 
-	@JsonProperty("codeHTML")
 	public String getHtmlContent() {
 		return this.htmlContent;
 	}
 
-	@JsonProperty("codeHTML")
 	public void setHtmlContent(final String htmlContent) {
 		this.htmlContent = htmlContent;
 	}
 
-	@JsonProperty("matiere")
 	public String getSubject() {
 		return this.subject;
 	}
 
-	@JsonProperty("matiere")
 	public void setSubject(final String subject) {
 		this.subject = subject;
 	}
 
-	@JsonProperty("titre")
 	public String getTitle() {
 		return this.title;
 	}
 
-	@JsonProperty("titre")
 	public void setTitle(final String title) {
 		this.title = title;
 	}
@@ -67,42 +74,34 @@ public class ActivityContent {
 		this.date = date;
 	}
 
-	@JsonProperty("flagRealise")
 	public boolean isDone() {
 		return this.done;
 	}
 
-	@JsonProperty("flagRealise")
 	public void setDone(final boolean done) {
 		this.done = done;
 	}
 
-	@JsonProperty("flagTravailAFaire")
 	public boolean isHomework() {
 		return this.homework;
 	}
 
-	@JsonProperty("flagTravailAFaire")
 	public void setHomework(final boolean homework) {
 		this.homework = homework;
 	}
 
-	@JsonProperty("isFaitModifiable")
 	public boolean isDoneEditable() {
 		return this.doneEditable;
 	}
 
-	@JsonProperty("isFaitModifiable")
 	public void setDoneEditable(final boolean doneEditable) {
 		this.doneEditable = doneEditable;
 	}
 
-	@JsonProperty("pjs")
 	public List<Attachment> getAttachments() {
 		return this.attachments;
 	}
 
-	@JsonProperty("pjs")
 	public void setAttachments(final List<Attachment> attachments) {
 		this.attachments = attachments;
 	}

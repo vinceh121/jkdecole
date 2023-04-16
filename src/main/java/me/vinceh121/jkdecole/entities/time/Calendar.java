@@ -6,16 +6,16 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Calendar {
+	@JsonProperty("cdtOuvert")
 	private boolean calendarOpen;
 	private Date currentDate;
+	@JsonProperty("listeJourCdt")
 	private List<TimeTableDay> days;
 
-	@JsonProperty("cdtOuvert")
 	public boolean isCalendarOpen() {
 		return this.calendarOpen;
 	}
 
-	@JsonProperty("cdtOuvert")
 	public void setCalendarOpen(final boolean calendarOpen) {
 		this.calendarOpen = calendarOpen;
 	}
@@ -28,14 +28,11 @@ public class Calendar {
 		this.currentDate = currentDate;
 	}
 
-	@JsonProperty("listeJourCdt")
 	public List<TimeTableDay> getDays() {
 		return this.days;
 	}
 
-	@JsonProperty("listeJourCdt")
 	public void setDays(final List<TimeTableDay> days) {
 		this.days = days;
 	}
-
 }

@@ -3,15 +3,17 @@ package me.vinceh121.jkdecole.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Attachment {
-	private long id;
-	private String url, name, mimeType;
-
 	@JsonProperty("idRessource")
+	private long id;
+	private String url;
+	private String name;
+	@JsonProperty("typeMIME")
+	private String mimeType;
+
 	public long getId() {
 		return this.id;
 	}
 
-	@JsonProperty("idRessource")
 	public void setId(final long id) {
 		this.id = id;
 	}
@@ -32,12 +34,10 @@ public class Attachment {
 		this.name = name;
 	}
 
-	@JsonProperty("typeMIME")
 	public String getMimeType() {
 		return this.mimeType;
 	}
 
-	@JsonProperty("typeMIME")
 	public void setMimeType(final String mimeType) {
 		this.mimeType = mimeType;
 	}
