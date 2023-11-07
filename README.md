@@ -1,6 +1,8 @@
 # jkdecole
 ![GitHub](https://img.shields.io/github/license/vinceh121/jkdecole)
 
+> DEPRECATION NOTICE: The Kdecole Mobility API is being deprecated in favor of the Skolengo BFF API, please see https://github.com/vinceh121/jskolengo for an update wrapper of the new API
+
 Unofficial Java library to interact with Kdecole instances through the mobility API
 
 ## How to use
